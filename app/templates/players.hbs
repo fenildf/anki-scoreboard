@@ -1,0 +1,15 @@
+{{player-list title="Players" players=model}}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Add Players</h3>
+    </div>
+    <div class="panel-body">
+        <p>Type in the player's name and hit enter. Multiple players can be added with semicolon <code>;</code>.</p>
+      {{input type="text" value=playerName placeholder="Name" enter="createPlayer"}}
+        <button type="submit" class="btn btn-default btn-sm" {{action "createPlayer" playerName}}>
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add player
+        </button>
+
+    </div>
+</div>

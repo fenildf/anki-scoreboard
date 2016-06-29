@@ -6,6 +6,10 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('players');
+  this.route('about');
+  this.route('matches');
+  this.route('results');
 });
 
 export default Router;
