@@ -1,0 +1,17 @@
+{
+  "name": "scoreboard-server",
+  "version": "0.0.1",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "debug": "~2.2.0",
+    "express": "~4.13.4",
+    "mongoose": "^4.5.2"
+  },
+  "devDependencies": {
+    "body-parser": "^1.15.2"
+  }
+}
