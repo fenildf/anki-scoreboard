@@ -1,4 +1,3 @@
-<h2 class="">Matches</h2>
 <table class="table">
     <thead>
     <tr>
@@ -8,18 +7,125 @@
     </tr>
     </thead>
     <tbody>
+
     {{#each model as |match|}}
         <tr>
             <td>{{match.type}}</td>
-            <td>
-                <ol>
-                  {{#each match.players as |player|}}
-                      <li>{{player.name}} ({{player.id}}) -> {{player}}</li>
-                  {{/each}}
-                </ol>
-            </td>
-            <td>{{match.date}}</td>
+            <td>sfsfd</td>
+            <td>sfsfd</td>
         </tr>
     {{/each}}
     </tbody>
+
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Type</h3>
+        </div>
+        <div class="panel-body">
+            <main>
+                <form action="#">
+                    <label>Game Type:
+                        <select name="top5">
+                            <option>Race</option>
+                            <option>Battle</option>
+                            <option>King of the Hill</option>
+                            <option>Time Trial</option>
+                        </select>
+                    </label>
+                </form>
+            </main>
+            <button type="submit" class="btn btn-default btn-sm" {{action "createPlayer" playerName}}>
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Type
+            </button>
+
+        </div>
+    </div>
 </table>
+
+<table>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Lap</h3>
+        </div>
+        <div class="panel-body">
+            <main>
+                <form action="#">
+                    <label>Lap:
+                        <select name="top5">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </label>
+                </form>
+            </main>
+            <button type="submit" class="btn btn-default btn-sm" {{action "createPlayer" playerName}}>
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add lap
+            </button>
+
+        </div>
+    </div>
+</table>
+<table>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Players</h3>
+        </div>
+        <div class="panel-body">
+            <main>
+                <form action="#">
+                    <label>Player:
+                        <select name="top5">
+                            <option>/</option>
+                            <option>/</option>
+                            <option>/</option>
+                            <option>/</option>
+                        </select>
+                    </label>
+                </form>
+            </main>
+            <button type="submit" class="btn btn-default btn-sm" {{action "createPlayer" playerName}}>
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Player
+            </button>
+
+        </div>
+    </div>
+</table>
+<table>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Cars</h3>
+        </div>
+        <div class="panel-body">
+            <main>
+                <form action="#">
+                    <label>Car:
+                        <select name="top5">
+                            <option>Nuke</option>
+                            <option>Guardian</option>
+                            <option>Thermo</option>
+                            <option>Big Bang</option>
+                            <option>Shock</option>
+                            <option>Skull</option>
+                        </select>
+                    </label>
+                </form>
+            </main>
+            <button type="submit" class="btn btn-default btn-sm" {{action "createPlayer" playerName}}>
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Car
+            </button>
+
+        </div>
+    </div>
+</table>
+
+
+
+
+
+
+
+
