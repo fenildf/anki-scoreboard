@@ -41,4 +41,25 @@ export default function () {
       }]
     };
   });
+
+  this.get('/matches', function () {
+      return {
+        data: [{
+          type: 'match',
+          id: 1,
+          attributes: {
+            type: 'battle',
+            date: '2016-07-01T09:45:00'
+          }
+        },{
+          type: 'match',
+          id: 2,
+          attributes: {
+            type: 'koth',
+            date: '2016-07-01T10:00:00'
+          }
+        }]
+      };
+    });
+
 }

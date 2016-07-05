@@ -14,15 +14,15 @@ export default Ember.Route.extend({
 
       if (input && input !== ""){
         console.log("Erzeuge neue Spiele: " + input);
-
+<w<
         var inputsplit = input.split(",");
         var ausgabe = "input";
 
         for (var i = 0; i < inputsplit.length; i++){
           var playerName = inputsplit[i];
           var playerAttributes = {name: playerName};
-
-          if (playerName && playerName !== "") {
+          var existingPlayers = this.store.peekAll('player');
+          if (playerName && playerName !== "" && existingPlayers.findBy("name", playerName) === undefined) {
            this.store.createRecord('player', playerAttributes);
           }
 
