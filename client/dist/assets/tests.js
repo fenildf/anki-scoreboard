@@ -351,7 +351,7 @@ define('anki-scoreboard/tests/routes/results.jshint', ['exports'], function (exp
   QUnit.module('JSHint | routes/results.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'routes/results.js should pass jshint.');
+    assert.ok(false, 'routes/results.js should pass jshint.\nroutes/results.js: line 14, col 16, Missing semicolon.\nroutes/results.js: line 40, col 27, Missing semicolon.\nroutes/results.js: line 14, col 11, \'resul\' is defined but never used.\nroutes/results.js: line 8, col 9, \'results\' is defined but never used.\n\n4 errors');
   });
 });
 define('anki-scoreboard/tests/serializers/application.jshint', ['exports'], function (exports) {

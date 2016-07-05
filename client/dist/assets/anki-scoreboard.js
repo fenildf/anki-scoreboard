@@ -259,7 +259,7 @@ define('anki-scoreboard/mirage/config', ['exports'], function (exports) {
 
     /*
      Config (with defaults).
-      Note: these only affect routes defined *after* them!
+       Note: these only affect routes defined *after* them!
      */
 
     this.urlPrefix = 'http://localhost:4500'; // make this `http://localhost:8080`, for example, if your API is on a different server
@@ -268,18 +268,18 @@ define('anki-scoreboard/mirage/config', ['exports'], function (exports) {
 
     /*
      Shorthand cheatsheet:
-      this.get('/posts');
+       this.get('/posts');
      this.post('/posts');
      this.get('/posts/:id');
      this.put('/posts/:id'); // or this.patch
      this.del('/posts/:id');
-      http://www.ember-climirage.com/docs/v0.2.x/shorthands/
+       http://www.ember-climirage.com/docs/v0.2.x/shorthands/
      */
 
     this.get('/players');
     this.get('/players/:id');
-    this.passthrough("/players");
-    this.passthrough("/players/:id");
+    //this.passthrough("/players");
+    //this.passthrough("/players/:id");
 
     this.get('/matches');
     this.get('/matches/:id');
@@ -359,7 +359,7 @@ define('anki-scoreboard/mirage/models/player', ['exports', 'ember-cli-mirage'], 
 define('anki-scoreboard/mirage/scenarios/default', ['exports', 'ember-cli-mirage'], function (exports, _emberCliMirage) {
   exports['default'] = function (server) {
     var players = server.createList('players', 5);
-    server.createList('matches', 2);
+    server.createList('matches', 10);
 
     console.log(players);
   };
@@ -448,7 +448,58 @@ define('anki-scoreboard/routes/players', ['exports', 'ember'], function (exports
   });
 });
 define('anki-scoreboard/routes/results', ['exports', 'ember'], function (exports, _ember) {
-  exports['default'] = _ember['default'].Route.extend({});
+  exports['default'] = _ember['default'].Route.extend({
+
+    model: function model() {
+
+      var matches = this.store.peekAll('match');
+      var results = [];
+
+      matches.forEach(function (match) {
+
+        console.log(match);
+
+        var resul;
+        match.get('players').then(function (players) {
+          players.forEach(function (player, index) {
+            var points = 0;
+            switch (index) {
+
+              case 0:
+                points = 10;
+                break;
+
+              case 1:
+                points = 5;
+                break;
+
+              case 2:
+                points = 2;
+                break;
+
+              default:
+                points = 0;
+            }
+
+            console.log("#" + (index + 1) + " " + player.get('name') + " --> " + points);
+          });
+        });
+
+        console.log("-----");
+      });
+
+      var rank1 = { player: "Player1", points: 25 };
+      var rank2 = { player: "Player2", points: 22 };
+      var rank3 = { player: "Player3", points: 18 };
+      var rank4 = { player: "Player4", points: 14 };
+      var rank5 = { player: "Player5", points: 10 };
+      var rank6 = { player: "Player6", points: 5 };
+      var rank7 = { player: "Player7", points: 3 };
+
+      return [rank1, rank2, rank3, rank4, rank5, rank6, rank7];
+    }
+
+  });
 });
 define('anki-scoreboard/serializers/application', ['exports', 'ember-data/serializers/rest'], function (exports, _emberDataSerializersRest) {
   exports['default'] = _emberDataSerializersRest['default'].extend({
@@ -1257,6 +1308,54 @@ define("anki-scoreboard/templates/index", ["exports"], function (exports) {
 define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template((function () {
     var child0 = (function () {
+      var child0 = (function () {
+        return {
+          meta: {
+            "fragmentReason": false,
+            "revision": "Ember@2.6.0",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 16,
+                "column": 14
+              },
+              "end": {
+                "line": 20,
+                "column": 14
+              }
+            },
+            "moduleName": "anki-scoreboard/templates/matches.hbs"
+          },
+          isEmpty: false,
+          arity: 1,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("                ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("li");
+            var el2 = dom.createTextNode("\n                  ");
+            dom.appendChild(el1, el2);
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            var el2 = dom.createTextNode("\n                ");
+            dom.appendChild(el1, el2);
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n              ");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var morphs = new Array(1);
+            morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 1, 1);
+            return morphs;
+          },
+          statements: [["content", "player.name", ["loc", [null, [18, 18], [18, 33]]]]],
+          locals: ["player"],
+          templates: []
+        };
+      })();
       return {
         meta: {
           "fragmentReason": false,
@@ -1268,7 +1367,7 @@ define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
               "column": 4
             },
             "end": {
-              "line": 17,
+              "line": 24,
               "column": 4
             }
           },
@@ -1292,13 +1391,21 @@ define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
           var el2 = dom.createTextNode("\n            ");
           dom.appendChild(el1, el2);
           var el2 = dom.createElement("td");
-          var el3 = dom.createTextNode("sfsfd");
+          var el3 = dom.createTextNode("\n                ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("ol");
+          var el4 = dom.createTextNode("\n");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createComment("");
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n            ");
           dom.appendChild(el2, el3);
           dom.appendChild(el1, el2);
           var el2 = dom.createTextNode("\n            ");
           dom.appendChild(el1, el2);
           var el2 = dom.createElement("td");
-          var el3 = dom.createTextNode("sfsfd");
+          var el3 = dom.createComment("");
           dom.appendChild(el2, el3);
           dom.appendChild(el1, el2);
           var el2 = dom.createTextNode("\n        ");
@@ -1309,13 +1416,16 @@ define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
           return el0;
         },
         buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(1);
-          morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1, 1]), 0, 0);
+          var element0 = dom.childAt(fragment, [1]);
+          var morphs = new Array(3);
+          morphs[0] = dom.createMorphAt(dom.childAt(element0, [1]), 0, 0);
+          morphs[1] = dom.createMorphAt(dom.childAt(element0, [3, 1]), 1, 1);
+          morphs[2] = dom.createMorphAt(dom.childAt(element0, [5]), 0, 0);
           return morphs;
         },
-        statements: [["content", "match.type", ["loc", [null, [13, 16], [13, 30]]]]],
+        statements: [["content", "match.type", ["loc", [null, [13, 16], [13, 30]]]], ["block", "each", [["get", "match.players", ["loc", [null, [16, 22], [16, 35]]]]], [], 0, null, ["loc", [null, [16, 14], [20, 23]]]], ["content", "match.date", ["loc", [null, [22, 16], [22, 30]]]]],
         locals: ["match"],
-        templates: []
+        templates: [child0]
       };
     })();
     return {
@@ -1332,7 +1442,7 @@ define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
             "column": 0
           },
           "end": {
-            "line": 132,
+            "line": 139,
             "column": 0
           }
         },
@@ -1792,20 +1902,20 @@ define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
         return el0;
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-        var element0 = dom.childAt(fragment, [0]);
-        var element1 = dom.childAt(element0, [5, 3, 3]);
-        var element2 = dom.childAt(fragment, [2, 1, 3, 3]);
-        var element3 = dom.childAt(fragment, [4, 1, 3, 3]);
-        var element4 = dom.childAt(fragment, [6, 1, 3, 3]);
+        var element1 = dom.childAt(fragment, [0]);
+        var element2 = dom.childAt(element1, [5, 3, 3]);
+        var element3 = dom.childAt(fragment, [2, 1, 3, 3]);
+        var element4 = dom.childAt(fragment, [4, 1, 3, 3]);
+        var element5 = dom.childAt(fragment, [6, 1, 3, 3]);
         var morphs = new Array(5);
-        morphs[0] = dom.createMorphAt(dom.childAt(element0, [3]), 1, 1);
-        morphs[1] = dom.createElementMorph(element1);
-        morphs[2] = dom.createElementMorph(element2);
-        morphs[3] = dom.createElementMorph(element3);
-        morphs[4] = dom.createElementMorph(element4);
+        morphs[0] = dom.createMorphAt(dom.childAt(element1, [3]), 1, 1);
+        morphs[1] = dom.createElementMorph(element2);
+        morphs[2] = dom.createElementMorph(element3);
+        morphs[3] = dom.createElementMorph(element4);
+        morphs[4] = dom.createElementMorph(element5);
         return morphs;
       },
-      statements: [["block", "each", [["get", "model", ["loc", [null, [11, 12], [11, 17]]]]], [], 0, null, ["loc", [null, [11, 4], [17, 13]]]], ["element", "action", ["createPlayer", ["get", "playerName", ["loc", [null, [39, 89], [39, 99]]]]], [], ["loc", [null, [39, 65], [39, 101]]]], ["element", "action", ["createPlayer", ["get", "playerName", ["loc", [null, [65, 89], [65, 99]]]]], [], ["loc", [null, [65, 65], [65, 101]]]], ["element", "action", ["createPlayer", ["get", "playerName", ["loc", [null, [90, 89], [90, 99]]]]], [], ["loc", [null, [90, 65], [90, 101]]]], ["element", "action", ["createPlayer", ["get", "playerName", ["loc", [null, [117, 89], [117, 99]]]]], [], ["loc", [null, [117, 65], [117, 101]]]]],
+      statements: [["block", "each", [["get", "model", ["loc", [null, [11, 12], [11, 17]]]]], [], 0, null, ["loc", [null, [11, 4], [24, 13]]]], ["element", "action", ["createPlayer", ["get", "playerName", ["loc", [null, [46, 89], [46, 99]]]]], [], ["loc", [null, [46, 65], [46, 101]]]], ["element", "action", ["createPlayer", ["get", "playerName", ["loc", [null, [72, 89], [72, 99]]]]], [], ["loc", [null, [72, 65], [72, 101]]]], ["element", "action", ["createPlayer", ["get", "playerName", ["loc", [null, [97, 89], [97, 99]]]]], [], ["loc", [null, [97, 65], [97, 101]]]], ["element", "action", ["createPlayer", ["get", "playerName", ["loc", [null, [124, 89], [124, 99]]]]], [], ["loc", [null, [124, 65], [124, 101]]]]],
       locals: [],
       templates: [child0]
     };
@@ -1921,6 +2031,71 @@ define("anki-scoreboard/templates/players", ["exports"], function (exports) {
 });
 define("anki-scoreboard/templates/results", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template((function () {
+    var child0 = (function () {
+      return {
+        meta: {
+          "fragmentReason": false,
+          "revision": "Ember@2.6.0",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 16,
+              "column": 4
+            },
+            "end": {
+              "line": 22,
+              "column": 4
+            }
+          },
+          "moduleName": "anki-scoreboard/templates/results.hbs"
+        },
+        isEmpty: false,
+        arity: 1,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("        ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("tr");
+          var el2 = dom.createTextNode("\n            ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("th");
+          dom.setAttribute(el2, "scope", "row");
+          var el3 = dom.createTextNode("???");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n            ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("td");
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n            ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("td");
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n        ");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var element0 = dom.childAt(fragment, [1]);
+          var morphs = new Array(2);
+          morphs[0] = dom.createMorphAt(dom.childAt(element0, [3]), 0, 0);
+          morphs[1] = dom.createMorphAt(dom.childAt(element0, [5]), 0, 0);
+          return morphs;
+        },
+        statements: [["content", "result.player", ["loc", [null, [19, 16], [19, 33]]]], ["content", "result.points", ["loc", [null, [20, 16], [20, 33]]]]],
+        locals: ["result"],
+        templates: []
+      };
+    })();
     return {
       meta: {
         "fragmentReason": {
@@ -1935,7 +2110,7 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
             "column": 0
           },
           "end": {
-            "line": 196,
+            "line": 220,
             "column": 8
           }
         },
@@ -1957,7 +2132,64 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         var el2 = dom.createTextNode("\n");
         dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n\n\n");
+        var el1 = dom.createTextNode("\n\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("h2");
+        var el2 = dom.createTextNode("Total");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("table");
+        dom.setAttribute(el1, "class", "table");
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("thead");
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("tr");
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("th");
+        var el5 = dom.createTextNode("#");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("th");
+        var el5 = dom.createTextNode("Player");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("th");
+        var el5 = dom.createTextNode("Points");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n    ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("tbody");
+        var el3 = dom.createTextNode("\n\n");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("    ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("hr");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n\n\n\n\n");
         dom.appendChild(el0, el1);
         var el1 = dom.createElement("table");
         dom.setAttribute(el1, "class", "table");
@@ -2851,12 +3083,14 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         dom.appendChild(el0, el1);
         return el0;
       },
-      buildRenderNodes: function buildRenderNodes() {
-        return [];
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [4, 3]), 1, 1);
+        return morphs;
       },
-      statements: [],
+      statements: [["block", "each", [["get", "model", ["loc", [null, [16, 12], [16, 17]]]]], [], 0, null, ["loc", [null, [16, 4], [22, 13]]]]],
       locals: [],
-      templates: []
+      templates: [child0]
     };
   })());
 });
@@ -2934,7 +3168,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("anki-scoreboard/app")["default"].create({"name":"anki-scoreboard","version":"0.0.0+25db4148"});
+  require("anki-scoreboard/app")["default"].create({"name":"anki-scoreboard","version":"0.0.0+d66272a4"});
 }
 
 /* jshint ignore:end */
