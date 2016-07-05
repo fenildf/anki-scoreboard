@@ -342,7 +342,7 @@ define('anki-scoreboard/tests/routes/players.jshint', ['exports'], function (exp
   QUnit.module('JSHint | routes/players.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'routes/players.js should pass jshint.');
+    assert.ok(false, 'routes/players.js should pass jshint.\nroutes/players.js: line 18, col 13, \'ausgabe\' is defined but never used.\n\n1 error');
   });
 });
 define('anki-scoreboard/tests/routes/results.jshint', ['exports'], function (exports) {
