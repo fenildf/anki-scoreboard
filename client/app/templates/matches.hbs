@@ -11,8 +11,15 @@
     {{#each model as |match|}}
         <tr>
             <td>{{match.type}}</td>
-            <td>sfsfd</td>
-            <td>sfsfd</td>
+            <td>
+                <ol>
+              {{#each match.players as |player|}}
+                <li>
+                  {{player.name}}
+                </li>
+              {{/each}}</ol>
+            </td>
+            <td>{{match.date}}</td>
         </tr>
     {{/each}}
     </tbody>

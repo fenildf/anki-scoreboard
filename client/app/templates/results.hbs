@@ -2,6 +2,30 @@
     <small>Übersicht</small>
 </h2>
 
+<h2>Total</h2>
+<table class="table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Player</th>
+        <th>Points</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {{#each model as |result|}}
+        <tr>
+            <th scope="row">???</th>
+            <td>{{result.player}}</td>
+            <td>{{result.points}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+<hr/>
+
+
+
 
 <table class="table">
     <thead>
