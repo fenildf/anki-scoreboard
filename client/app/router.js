@@ -10,6 +10,8 @@ Router.map(function() {
   this.route('about');
   this.route('matches');
   this.route('results');
+  this.route('play');
+  this.route('weapons');
 });
 
 export default Router;
