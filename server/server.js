@@ -44,15 +44,24 @@ app.get('/api/players', function(req,res) {
   });
 });
 
+app.get('/api/players/:id', function(req,res) {
+  console.log("Fetch player with id " + req.params.id);
+  Player.find({_id: id},function(err,docs) {
+    if(err) {
+      res.send({error:err});
+    }
+    else {
+      res.send({players:docs});
+    }
+  });
+});
+
 app.post('/api/players', function(req,res) {
   var playerName = req.body.player.name;
   console.log("POST to players: " + playerName);
-
   if (playerName && playerName !== "") {
     new Player({name: playerName}).save();
   }
-
-
 });
 
 app.listen('4500');

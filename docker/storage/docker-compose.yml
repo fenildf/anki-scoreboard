@@ -1,0 +1,4 @@
+app:
+  image: sbuettne/anki-storage
+  ports:
+    - "27017:27017"

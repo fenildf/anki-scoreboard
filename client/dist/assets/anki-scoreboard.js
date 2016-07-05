@@ -276,13 +276,92 @@ define('anki-scoreboard/mirage/config', ['exports'], function (exports) {
       http://www.ember-climirage.com/docs/v0.2.x/shorthands/
      */
 
-    this.get('/players', function () {
-      return {
-        players: [{ _id: "34345341", name: "Foo" }, { _id: "34345342", name: "Bla" }, { _id: "34345343", name: "Blub" }]
-      };
-    });
-
+    this.get('/players');
+    this.get('/players/:id');
     this.passthrough("/players");
+    this.passthrough("/players/:id");
+
+    this.get('/matches');
+    this.get('/matches/:id');
+
+    //this.get('/players', function () {
+    //  return {
+    //    players: [
+    //      {_id: "5773e621eb00a90afc181a67", name: "Alice"},
+    //      {_id: "2", name: "Bla"},
+    //      {_id: "3", name: "Blub"}
+    //    ]
+    //  };
+    //});
+    //
+    //this.get('/players/:id');
+    //
+    //this.get('/players/5773e621eb00a90afc181a67', function () {
+    //  return {_id: "5773e621eb00a90afc181a67", name: "Alice"};
+    //});
+
+    //this.get('/matches', function () {
+    //  return {
+    //    matches: [
+    //      {_id: "1", date: "2016-07-01T10:30:00", type: "koth", players: ["5773e621eb00a90afc181a67"]}
+    //    ]
+    //  };
+    //});
+  };
+});
+define("anki-scoreboard/mirage/factories/matches", ["exports", "ember-cli-mirage"], function (exports, _emberCliMirage) {
+  exports["default"] = _emberCliMirage["default"].Factory.extend({
+    _id: function _id(i) {
+      return i;
+    },
+    type: function type() {
+      return _emberCliMirage.faker.random.arrayElement(["race", "battle", "koth", "time"]);
+    },
+    date: function date() {
+      return _emberCliMirage.faker.date.recent();
+    },
+    players: function players() {
+      var allPlayers = [];
+      for (var i = 1; i <= 4; i++) {
+        allPlayers.push(i + "");
+      }
+
+      var players = [];
+      while (players.length < 4) {
+        var playerId = _emberCliMirage.faker.random.arrayElement(allPlayers);
+        if (players.indexOf(playerId) < 0 && playerId && playerId !== "") {
+          players.push(playerId);
+        }
+      }
+
+      return players;
+    }
+  });
+});
+define("anki-scoreboard/mirage/factories/players", ["exports", "ember-cli-mirage"], function (exports, _emberCliMirage) {
+  exports["default"] = _emberCliMirage["default"].Factory.extend({
+    _id: function _id(i) {
+      return i + 1;
+    },
+    name: function name(i) {
+      var firstName = _emberCliMirage.faker.name.firstName();
+      console.log("Creating player #" + (i + 1) + " with name '" + firstName + "'.");
+      return firstName;
+    }
+  });
+});
+define('anki-scoreboard/mirage/models/match', ['exports', 'ember-cli-mirage'], function (exports, _emberCliMirage) {
+  exports['default'] = _emberCliMirage.Model.extend({});
+});
+define('anki-scoreboard/mirage/models/player', ['exports', 'ember-cli-mirage'], function (exports, _emberCliMirage) {
+  exports['default'] = _emberCliMirage.Model.extend({});
+});
+define('anki-scoreboard/mirage/scenarios/default', ['exports', 'ember-cli-mirage'], function (exports, _emberCliMirage) {
+  exports['default'] = function (server) {
+    var players = server.createList('players', 5);
+    server.createList('matches', 2);
+
+    console.log(players);
   };
 });
 define('anki-scoreboard/mixins/active-link', ['exports', 'ember-cli-active-link-wrapper/mixins/active-link'], function (exports, _emberCliActiveLinkWrapperMixinsActiveLink) {
@@ -290,14 +369,15 @@ define('anki-scoreboard/mixins/active-link', ['exports', 'ember-cli-active-link-
 });
 define('anki-scoreboard/models/match', ['exports', 'ember-data/model', 'ember-data/attr', 'ember-data/relationships'], function (exports, _emberDataModel, _emberDataAttr, _emberDataRelationships) {
   exports['default'] = _emberDataModel['default'].extend({
-    players: (0, _emberDataRelationships.hasMany)('player')
+    date: (0, _emberDataAttr['default'])('date'),
+    type: (0, _emberDataAttr['default'])('string'),
+    players: (0, _emberDataRelationships.hasMany)("players")
   });
 });
-define('anki-scoreboard/models/player', ['exports', 'ember-data/model', 'ember-data/attr'], function (exports, _emberDataModel, _emberDataAttr) {
-  // import { belongsTo, hasMany } from 'ember-data/relationships';
-
+define('anki-scoreboard/models/player', ['exports', 'ember-data/model', 'ember-data/attr', 'ember-data/relationships'], function (exports, _emberDataModel, _emberDataAttr, _emberDataRelationships) {
   exports['default'] = _emberDataModel['default'].extend({
-    name: (0, _emberDataAttr['default'])('string')
+    name: (0, _emberDataAttr['default'])('string'),
+    matches: (0, _emberDataRelationships.hasMany)('match')
   });
 });
 define('anki-scoreboard/resolver', ['exports', 'ember-resolver'], function (exports, _emberResolver) {
@@ -325,7 +405,13 @@ define('anki-scoreboard/routes/index', ['exports', 'ember'], function (exports, 
   exports['default'] = _ember['default'].Route.extend({});
 });
 define('anki-scoreboard/routes/matches', ['exports', 'ember'], function (exports, _ember) {
-  exports['default'] = _ember['default'].Route.extend({});
+  exports['default'] = _ember['default'].Route.extend({
+
+    model: function model() {
+      return this.store.findAll('match');
+    }
+
+  });
 });
 define('anki-scoreboard/routes/players', ['exports', 'ember'], function (exports, _ember) {
   exports['default'] = _ember['default'].Route.extend({
@@ -919,11 +1005,11 @@ define("anki-scoreboard/templates/components/player-list", ["exports"], function
           "loc": {
             "source": null,
             "start": {
-              "line": 4,
+              "line": 3,
               "column": 2
             },
             "end": {
-              "line": 6,
+              "line": 5,
               "column": 2
             }
           },
@@ -941,17 +1027,25 @@ define("anki-scoreboard/templates/components/player-list", ["exports"], function
           dom.setAttribute(el1, "class", "list-group-item");
           var el2 = dom.createComment("");
           dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode(" (");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createComment("");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode(")");
+          dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
           var el1 = dom.createTextNode("\n");
           dom.appendChild(el0, el1);
           return el0;
         },
         buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(1);
-          morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 0, 0);
+          var element0 = dom.childAt(fragment, [1]);
+          var morphs = new Array(2);
+          morphs[0] = dom.createMorphAt(element0, 0, 0);
+          morphs[1] = dom.createMorphAt(element0, 2, 2);
           return morphs;
         },
-        statements: [["content", "player.name", ["loc", [null, [5, 34], [5, 49]]]]],
+        statements: [["content", "player.name", ["loc", [null, [4, 34], [4, 49]]]], ["content", "player.id", ["loc", [null, [4, 51], [4, 64]]]]],
         locals: ["player"],
         templates: []
       };
@@ -970,7 +1064,7 @@ define("anki-scoreboard/templates/components/player-list", ["exports"], function
             "column": 0
           },
           "end": {
-            "line": 8,
+            "line": 7,
             "column": 0
           }
         },
@@ -982,11 +1076,8 @@ define("anki-scoreboard/templates/components/player-list", ["exports"], function
       hasRendered: false,
       buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
-        var el1 = dom.createTextNode("\n");
-        dom.appendChild(el0, el1);
         var el1 = dom.createElement("h2");
-        dom.setAttribute(el1, "class", "");
-        dom.setAttribute(el1, "page-header", "");
+        dom.setAttribute(el1, "class", "page-header");
         var el2 = dom.createComment("");
         dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
@@ -1005,11 +1096,11 @@ define("anki-scoreboard/templates/components/player-list", ["exports"], function
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
         var morphs = new Array(2);
-        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 0, 0);
-        morphs[1] = dom.createMorphAt(dom.childAt(fragment, [3]), 1, 1);
+        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0]), 0, 0);
+        morphs[1] = dom.createMorphAt(dom.childAt(fragment, [2]), 1, 1);
         return morphs;
       },
-      statements: [["content", "title", ["loc", [null, [2, 24], [2, 33]]]], ["block", "each", [["get", "players", ["loc", [null, [4, 10], [4, 17]]]]], [], 0, null, ["loc", [null, [4, 2], [6, 11]]]]],
+      statements: [["content", "title", ["loc", [null, [1, 24], [1, 33]]]], ["block", "each", [["get", "players", ["loc", [null, [3, 10], [3, 17]]]]], [], 0, null, ["loc", [null, [3, 2], [5, 11]]]]],
       locals: [],
       templates: [child0]
     };
@@ -1163,11 +1254,141 @@ define("anki-scoreboard/templates/index", ["exports"], function (exports) {
 });
 define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template((function () {
+    var child0 = (function () {
+      var child0 = (function () {
+        return {
+          meta: {
+            "fragmentReason": false,
+            "revision": "Ember@2.6.0",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 16,
+                "column": 18
+              },
+              "end": {
+                "line": 18,
+                "column": 18
+              }
+            },
+            "moduleName": "anki-scoreboard/templates/matches.hbs"
+          },
+          isEmpty: false,
+          arity: 1,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("                      ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("li");
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            var el2 = dom.createTextNode(" (");
+            dom.appendChild(el1, el2);
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            var el2 = dom.createTextNode(") -> ");
+            dom.appendChild(el1, el2);
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var element0 = dom.childAt(fragment, [1]);
+            var morphs = new Array(3);
+            morphs[0] = dom.createMorphAt(element0, 0, 0);
+            morphs[1] = dom.createMorphAt(element0, 2, 2);
+            morphs[2] = dom.createMorphAt(element0, 4, 4);
+            return morphs;
+          },
+          statements: [["content", "player.name", ["loc", [null, [17, 26], [17, 41]]]], ["content", "player.id", ["loc", [null, [17, 43], [17, 56]]]], ["content", "player", ["loc", [null, [17, 61], [17, 71]]]]],
+          locals: ["player"],
+          templates: []
+        };
+      })();
+      return {
+        meta: {
+          "fragmentReason": false,
+          "revision": "Ember@2.6.0",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 11,
+              "column": 4
+            },
+            "end": {
+              "line": 23,
+              "column": 4
+            }
+          },
+          "moduleName": "anki-scoreboard/templates/matches.hbs"
+        },
+        isEmpty: false,
+        arity: 1,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("        ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("tr");
+          var el2 = dom.createTextNode("\n            ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("td");
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n            ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("td");
+          var el3 = dom.createTextNode("\n                ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("ol");
+          var el4 = dom.createTextNode("\n");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createComment("");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createTextNode("                ");
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n            ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n            ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("td");
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n        ");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var element1 = dom.childAt(fragment, [1]);
+          var morphs = new Array(3);
+          morphs[0] = dom.createMorphAt(dom.childAt(element1, [1]), 0, 0);
+          morphs[1] = dom.createMorphAt(dom.childAt(element1, [3, 1]), 1, 1);
+          morphs[2] = dom.createMorphAt(dom.childAt(element1, [5]), 0, 0);
+          return morphs;
+        },
+        statements: [["content", "match.type", ["loc", [null, [13, 16], [13, 30]]]], ["block", "each", [["get", "match.players", ["loc", [null, [16, 26], [16, 39]]]]], [], 0, null, ["loc", [null, [16, 18], [18, 27]]]], ["content", "match.date", ["loc", [null, [21, 16], [21, 30]]]]],
+        locals: ["match"],
+        templates: [child0]
+      };
+    })();
     return {
       meta: {
         "fragmentReason": {
           "name": "missing-wrapper",
-          "problems": ["wrong-type"]
+          "problems": ["multiple-nodes"]
         },
         "revision": "Ember@2.6.0",
         "loc": {
@@ -1177,7 +1398,7 @@ define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
             "column": 0
           },
           "end": {
-            "line": 2,
+            "line": 26,
             "column": 0
           }
         },
@@ -1189,7 +1410,57 @@ define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
       hasRendered: false,
       buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
-        var el1 = dom.createComment("");
+        var el1 = dom.createElement("h2");
+        dom.setAttribute(el1, "class", "");
+        var el2 = dom.createTextNode("Matches");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("table");
+        dom.setAttribute(el1, "class", "table");
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("thead");
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("tr");
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("th");
+        var el5 = dom.createTextNode("Type");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("th");
+        var el5 = dom.createTextNode("Players");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("th");
+        var el5 = dom.createTextNode("Date");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n    ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("tbody");
+        var el3 = dom.createTextNode("\n");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("    ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
         var el1 = dom.createTextNode("\n");
         dom.appendChild(el0, el1);
@@ -1197,13 +1468,12 @@ define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
         var morphs = new Array(1);
-        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
-        dom.insertBoundary(fragment, 0);
+        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [2, 3]), 1, 1);
         return morphs;
       },
-      statements: [["content", "outlet", ["loc", [null, [1, 0], [1, 10]]]]],
+      statements: [["block", "each", [["get", "model", ["loc", [null, [11, 12], [11, 17]]]]], [], 0, null, ["loc", [null, [11, 4], [23, 13]]]]],
       locals: [],
-      templates: []
+      templates: [child0]
     };
   })());
 });
@@ -1500,6 +1770,41 @@ define('anki-scoreboard/tests/mirage/mirage/config.jshint', ['exports'], functio
     assert.ok(true, 'mirage/config.js should pass jshint.');
   });
 });
+define('anki-scoreboard/tests/mirage/mirage/factories/matches.jshint', ['exports'], function (exports) {
+  QUnit.module('JSHint | mirage/factories/matches.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'mirage/factories/matches.js should pass jshint.');
+  });
+});
+define('anki-scoreboard/tests/mirage/mirage/factories/players.jshint', ['exports'], function (exports) {
+  QUnit.module('JSHint | mirage/factories/players.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'mirage/factories/players.js should pass jshint.');
+  });
+});
+define('anki-scoreboard/tests/mirage/mirage/models/match.jshint', ['exports'], function (exports) {
+  QUnit.module('JSHint | mirage/models/match.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'mirage/models/match.js should pass jshint.');
+  });
+});
+define('anki-scoreboard/tests/mirage/mirage/models/player.jshint', ['exports'], function (exports) {
+  QUnit.module('JSHint | mirage/models/player.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'mirage/models/player.js should pass jshint.');
+  });
+});
+define('anki-scoreboard/tests/mirage/mirage/scenarios/default.jshint', ['exports'], function (exports) {
+  QUnit.module('JSHint | mirage/scenarios/default.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'mirage/scenarios/default.js should pass jshint.\nmirage/scenarios/default.js: line 1, col 8, \'Mirage\' is defined but never used.\nmirage/scenarios/default.js: line 1, col 18, \'faker\' is defined but never used.\n\n2 errors');
+  });
+});
 /* jshint ignore:start */
 
 
@@ -1532,7 +1837,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("anki-scoreboard/app")["default"].create({"name":"anki-scoreboard","version":"0.0.0+136a9d04"});
+  require("anki-scoreboard/app")["default"].create({"name":"anki-scoreboard","version":"0.0.0+61da9e94"});
 }
 
 /* jshint ignore:end */

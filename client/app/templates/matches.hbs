@@ -1,1 +1,25 @@
-{{outlet}}
+<h2 class="">Matches</h2>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Players</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each model as |match|}}
+        <tr>
+            <td>{{match.type}}</td>
+            <td>
+                <ol>
+                  {{#each match.players as |player|}}
+                      <li>{{player.name}} ({{player.id}}) -> {{player}}</li>
+                  {{/each}}
+                </ol>
+            </td>
+            <td>{{match.date}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

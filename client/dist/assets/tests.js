@@ -279,7 +279,7 @@ define('anki-scoreboard/tests/models/match.jshint', ['exports'], function (expor
   QUnit.module('JSHint | models/match.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'models/match.js should pass jshint.\nmodels/match.js: line 2, col 8, \'attr\' is defined but never used.\nmodels/match.js: line 3, col 10, \'belongsTo\' is defined but never used.\n\n2 errors');
+    assert.ok(false, 'models/match.js should pass jshint.\nmodels/match.js: line 4, col 10, \'belongsTo\' is defined but never used.\n\n1 error');
   });
 });
 define('anki-scoreboard/tests/models/player.jshint', ['exports'], function (exports) {
@@ -288,7 +288,7 @@ define('anki-scoreboard/tests/models/player.jshint', ['exports'], function (expo
   QUnit.module('JSHint | models/player.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'models/player.js should pass jshint.');
+    assert.ok(false, 'models/player.js should pass jshint.\nmodels/player.js: line 3, col 10, \'belongsTo\' is defined but never used.\n\n1 error');
   });
 });
 define('anki-scoreboard/tests/resolver.jshint', ['exports'], function (exports) {
