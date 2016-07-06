@@ -25,6 +25,15 @@ define('anki-scoreboard/tests/components/player-list.jshint', ['exports'], funct
     assert.ok(true, 'components/player-list.js should pass jshint.');
   });
 });
+define('anki-scoreboard/tests/controllers/matches.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | controllers/matches.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'controllers/matches.js should pass jshint.');
+  });
+});
 define('anki-scoreboard/tests/helpers/destroy-app', ['exports', 'ember'], function (exports, _ember) {
   exports['default'] = destroyApp;
 
@@ -279,7 +288,7 @@ define('anki-scoreboard/tests/models/match.jshint', ['exports'], function (expor
   QUnit.module('JSHint | models/match.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'models/match.js should pass jshint.\nmodels/match.js: line 4, col 10, \'belongsTo\' is defined but never used.\n\n1 error');
+    assert.ok(false, 'models/match.js should pass jshint.\nmodels/match.js: line 5, col 10, \'belongsTo\' is defined but never used.\n\n1 error');
   });
 });
 define('anki-scoreboard/tests/models/player.jshint', ['exports'], function (exports) {
@@ -351,7 +360,7 @@ define('anki-scoreboard/tests/routes/results.jshint', ['exports'], function (exp
   QUnit.module('JSHint | routes/results.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/results.js should pass jshint.\nroutes/results.js: line 14, col 16, Missing semicolon.\nroutes/results.js: line 40, col 27, Missing semicolon.\nroutes/results.js: line 14, col 11, \'resul\' is defined but never used.\nroutes/results.js: line 8, col 9, \'results\' is defined but never used.\n\n4 errors');
+    assert.ok(false, 'routes/results.js should pass jshint.\nroutes/results.js: line 2, col 8, \'_\' is defined but never used.\n\n1 error');
   });
 });
 define('anki-scoreboard/tests/serializers/application.jshint', ['exports'], function (exports) {
@@ -363,7 +372,8 @@ define('anki-scoreboard/tests/serializers/application.jshint', ['exports'], func
     assert.ok(true, 'serializers/application.js should pass jshint.');
   });
 });
-define('anki-scoreboard/tests/test-helper', ['exports', 'anki-scoreboard/tests/helpers/resolver', 'ember-qunit'], function (exports, _ankiScoreboardTestsHelpersResolver, _emberQunit) {
+define('anki-scoreboard/tests/test-helper', ['exports', 'anki-scoreboard/tests/helpers/resolver', 'anki-scoreboard/tests/helpers/register-select-helper', 'ember-qunit'], function (exports, _ankiScoreboardTestsHelpersResolver, _ankiScoreboardTestsHelpersRegisterSelectHelper, _emberQunit) {
+  (0, _ankiScoreboardTestsHelpersRegisterSelectHelper['default'])();
 
   (0, _emberQunit.setResolver)(_ankiScoreboardTestsHelpersResolver['default']);
 });
@@ -396,6 +406,28 @@ define('anki-scoreboard/tests/unit/adapters/application-test.jshint', ['exports'
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/adapters/application-test.js should pass jshint.');
+  });
+});
+define('anki-scoreboard/tests/unit/controllers/matches-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('controller:matches', 'Unit | Controller | matches', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var controller = this.subject();
+    assert.ok(controller);
+  });
+});
+define('anki-scoreboard/tests/unit/controllers/matches-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/controllers/matches-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/controllers/matches-test.js should pass jshint.');
   });
 });
 define('anki-scoreboard/tests/unit/controllers/player-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {

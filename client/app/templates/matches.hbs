@@ -1,3 +1,24 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Add Match</div>
+    <div class="panel-body">
+        <form>
+            <div class="form-group">
+                <label for="matchTypeField">Match Type</label>
+              {{select-2 id="matchTypeField" content=matchTypes value=matchType placeholder="Choose type ..." allowClear=false }}
+            </div>
+            <div class="form-group">
+                <label for="playerSelection">Players</label>
+              {{select-2 id="playerSelection" content=availablePlayers value=selectedPlayers multiple=true optionLabelPath="name" placeholder="Choose Players ..."}}
+            </div>
+            <button type="submit" class="btn btn-default" {{action "addMatch" matchType selectedPlayers}}>
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Match
+            </button>
+        </form>
+    </div>
+</div>
+
+
+
 <table class="table">
     <thead>
     <tr>
@@ -128,11 +149,3 @@
         </div>
     </div>
 </table>
-
-
-
-
-
-
-
-
