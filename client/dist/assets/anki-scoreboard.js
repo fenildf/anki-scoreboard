@@ -62,10 +62,16 @@ define("anki-scoreboard/controllers/matches", ["exports", "ember"], function (ex
 
       addMatch: function addMatch(type, players) {
         console.log("Adding match with type '" + type.id + "' and players: " + players);
+
+        // Create and save a new match with the provided data
+        var matchAttributes = {
+          date: new Date(),
+          type: type.id,
+          players: players
+        };
+        this.store.createRecord('match', matchAttributes);
       }
-
     }
-
   });
 });
 define('anki-scoreboard/helpers/pluralize', ['exports', 'ember-inflector/lib/helpers/pluralize'], function (exports, _emberInflectorLibHelpersPluralize) {
@@ -276,6 +282,13 @@ define("anki-scoreboard/instance-initializers/ember-data", ["exports", "ember-da
     initialize: _emberDataPrivateInstanceInitializersInitializeStoreService["default"]
   };
 });
+define("anki-scoreboard/locales/en-cldr", ["exports"], function (exports) {
+  exports["default"] = { "locale": "en", "pluralRuleFunction": function pluralRuleFunction(n /**/) {
+      var i = Math.floor(Math.abs(n)),
+          v = n.toString().replace(/^[^.]*\.?/, "").length;n = Math.floor(n);if (i === 1 && v === 0) return "one";return "other";
+    }, "fields": { "era": { "displayName": "Era" }, "year": { "displayName": "Year", "relative": { "0": "this year", "1": "next year", "-1": "last year" }, "relativeTime": { "future": { "one": "in {0} year", "other": "in {0} years" }, "past": { "one": "{0} year ago", "other": "{0} years ago" } } }, "year-short": { "displayName": "yr.", "relative": { "0": "this yr.", "1": "next yr.", "-1": "last yr." }, "relativeTime": { "future": { "one": "in {0} yr.", "other": "in {0} yr." }, "past": { "one": "{0} yr. ago", "other": "{0} yr. ago" } } }, "quarter": { "displayName": "Quarter", "relative": { "0": "this quarter", "1": "next quarter", "-1": "last quarter" }, "relativeTime": { "future": { "one": "in {0} quarter", "other": "in {0} quarters" }, "past": { "one": "{0} quarter ago", "other": "{0} quarters ago" } } }, "quarter-short": { "displayName": "qtr.", "relative": { "0": "this qtr.", "1": "next qtr.", "-1": "last qtr." }, "relativeTime": { "future": { "one": "in {0} qtr.", "other": "in {0} qtrs." }, "past": { "one": "{0} qtr. ago", "other": "{0} qtrs. ago" } } }, "month": { "displayName": "Month", "relative": { "0": "this month", "1": "next month", "-1": "last month" }, "relativeTime": { "future": { "one": "in {0} month", "other": "in {0} months" }, "past": { "one": "{0} month ago", "other": "{0} months ago" } } }, "month-short": { "displayName": "mo.", "relative": { "0": "this mo.", "1": "next mo.", "-1": "last mo." }, "relativeTime": { "future": { "one": "in {0} mo.", "other": "in {0} mo." }, "past": { "one": "{0} mo. ago", "other": "{0} mo. ago" } } }, "week": { "displayName": "Week", "relative": { "0": "this week", "1": "next week", "-1": "last week" }, "relativeTime": { "future": { "one": "in {0} week", "other": "in {0} weeks" }, "past": { "one": "{0} week ago", "other": "{0} weeks ago" } } }, "week-short": { "displayName": "wk.", "relative": { "0": "this wk.", "1": "next wk.", "-1": "last wk." }, "relativeTime": { "future": { "one": "in {0} wk.", "other": "in {0} wk." }, "past": { "one": "{0} wk. ago", "other": "{0} wk. ago" } } }, "day": { "displayName": "Day", "relative": { "0": "today", "1": "tomorrow", "-1": "yesterday" }, "relativeTime": { "future": { "one": "in {0} day", "other": "in {0} days" }, "past": { "one": "{0} day ago", "other": "{0} days ago" } } }, "day-short": { "displayName": "day" }, "weekday": { "displayName": "Day of the Week" }, "dayperiod": { "displayName": "AM/PM" }, "hour": { "displayName": "Hour", "relativeTime": { "future": { "one": "in {0} hour", "other": "in {0} hours" }, "past": { "one": "{0} hour ago", "other": "{0} hours ago" } } }, "hour-short": { "displayName": "hr.", "relativeTime": { "future": { "one": "in {0} hr.", "other": "in {0} hr." }, "past": { "one": "{0} hr. ago", "other": "{0} hr. ago" } } }, "minute": { "displayName": "Minute", "relativeTime": { "future": { "one": "in {0} minute", "other": "in {0} minutes" }, "past": { "one": "{0} minute ago", "other": "{0} minutes ago" } } }, "minute-short": { "displayName": "min.", "relativeTime": { "future": { "one": "in {0} min.", "other": "in {0} min." }, "past": { "one": "{0} min. ago", "other": "{0} min. ago" } } }, "second": { "displayName": "Second", "relative": { "0": "now" }, "relativeTime": { "future": { "one": "in {0} second", "other": "in {0} seconds" }, "past": { "one": "{0} second ago", "other": "{0} seconds ago" } } }, "second-short": { "displayName": "sec.", "relative": { "0": "now" }, "relativeTime": { "future": { "one": "in {0} sec.", "other": "in {0} sec." }, "past": { "one": "{0} sec. ago", "other": "{0} sec. ago" } } }, "zone": { "displayName": "Time Zone" }, "sun": { "relative": { "0": "this Sunday", "1": "next Sunday", "-1": "last Sunday" } }, "sun-short": { "relative": { "0": "this Sun.", "1": "next Sun.", "-1": "last Sun." } }, "sun-narrow": { "relative": { "0": "this Su", "1": "next Su", "-1": "last Su" } }, "mon": { "relative": { "0": "this Monday", "1": "next Monday", "-1": "last Monday" } }, "mon-short": { "relative": { "0": "this Mon.", "1": "next Mon.", "-1": "last Mon." } }, "mon-narrow": { "relative": { "0": "this M", "1": "next M", "-1": "last M" } }, "tue": { "relative": { "0": "this Tuesday", "1": "next Tuesday", "-1": "last Tuesday" } }, "tue-short": { "relative": { "0": "this Tue.", "1": "next Tue.", "-1": "last Tue." } }, "tue-narrow": { "relative": { "0": "this Tu", "1": "next Tu", "-1": "last Tu" } }, "wed": { "relative": { "0": "this Wednesday", "1": "next Wednesday", "-1": "last Wednesday" } }, "wed-short": { "relative": { "0": "this Wed.", "1": "next Wed.", "-1": "last Wed." } }, "wed-narrow": { "relative": { "0": "this W", "1": "next W", "-1": "last W" } }, "thu": { "relative": { "0": "this Thursday", "1": "next Thursday", "-1": "last Thursday" } }, "thu-short": { "relative": { "0": "this Thu.", "1": "next Thu.", "-1": "last Thu." } }, "thu-narrow": { "relative": { "0": "this Th", "1": "next Th", "-1": "last Th" } }, "fri": { "relative": { "0": "this Friday", "1": "next Friday", "-1": "last Friday" } }, "fri-short": { "relative": { "0": "this Fri.", "1": "next Fri.", "-1": "last Fri." } }, "fri-narrow": { "relative": { "0": "this F", "1": "next F", "-1": "last F" } }, "sat": { "relative": { "0": "this Saturday", "1": "next Saturday", "-1": "last Saturday" } }, "sat-short": { "relative": { "0": "this Sat.", "1": "next Sat.", "-1": "last Sat." } }, "sat-narrow": { "relative": { "0": "this Sa", "1": "next Sa", "-1": "last Sa" } } } };
+});
+define("anki-scoreboard/locales/en", ["exports"], function (exports) {});
 define('anki-scoreboard/mirage/config', ['exports'], function (exports) {
   exports['default'] = function () {
 
@@ -307,6 +320,9 @@ define('anki-scoreboard/mirage/config', ['exports'], function (exports) {
 
     this.get('/matches');
     this.get('/matches/:id');
+
+    //this.passthrough("/matches");
+    //this.passthrough("/matches/:id");
 
     //this.get('/players', function () {
     //  return {
@@ -395,11 +411,7 @@ define('anki-scoreboard/models/match', ['exports', 'ember', 'ember-data/model', 
   exports['default'] = _emberDataModel['default'].extend({
     date: (0, _emberDataAttr['default'])('date'),
     type: (0, _emberDataAttr['default'])('string'),
-    players: (0, _emberDataRelationships.hasMany)("players"),
-    availablePlayers: _ember['default'].computed(function () {
-      return this.store.findAll('player');
-    })
-
+    players: (0, _emberDataRelationships.hasMany)("players")
   });
 });
 define('anki-scoreboard/models/player', ['exports', 'ember-data/model', 'ember-data/attr', 'ember-data/relationships'], function (exports, _emberDataModel, _emberDataAttr, _emberDataRelationships) {
@@ -422,6 +434,8 @@ define('anki-scoreboard/router', ['exports', 'ember', 'anki-scoreboard/config/en
     this.route('about');
     this.route('matches');
     this.route('results');
+    this.route('play');
+    this.route('weapons');
   });
 
   exports['default'] = Router;
@@ -448,6 +462,9 @@ define('anki-scoreboard/routes/matches', ['exports', 'ember'], function (exports
     }
 
   });
+});
+define('anki-scoreboard/routes/play', ['exports', 'ember'], function (exports, _ember) {
+  exports['default'] = _ember['default'].Route.extend({});
 });
 define('anki-scoreboard/routes/players', ['exports', 'ember'], function (exports, _ember) {
   exports['default'] = _ember['default'].Route.extend({
@@ -539,6 +556,9 @@ define('anki-scoreboard/routes/results', ['exports', 'ember', 'underscore'], fun
     }
 
   });
+});
+define('anki-scoreboard/routes/weapons', ['exports', 'ember'], function (exports, _ember) {
+  exports['default'] = _ember['default'].Route.extend({});
 });
 define('anki-scoreboard/serializers/application', ['exports', 'ember-data/serializers/rest'], function (exports, _emberDataSerializersRest) {
   exports['default'] = _emberDataSerializersRest['default'].extend({
@@ -851,11 +871,167 @@ define("anki-scoreboard/templates/application", ["exports"], function (exports) 
             "loc": {
               "source": null,
               "start": {
-                "line": 30,
+                "line": 28,
                 "column": 16
               },
               "end": {
-                "line": 30,
+                "line": 28,
+                "column": 41
+              }
+            },
+            "moduleName": "anki-scoreboard/templates/application.hbs"
+          },
+          isEmpty: false,
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("Play");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes() {
+            return [];
+          },
+          statements: [],
+          locals: [],
+          templates: []
+        };
+      })();
+      return {
+        meta: {
+          "fragmentReason": false,
+          "revision": "Ember@2.6.0",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 27,
+              "column": 14
+            },
+            "end": {
+              "line": 29,
+              "column": 14
+            }
+          },
+          "moduleName": "anki-scoreboard/templates/application.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("                ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+          return morphs;
+        },
+        statements: [["block", "link-to", ["play"], [], 0, null, ["loc", [null, [28, 16], [28, 41]]]]],
+        locals: [],
+        templates: [child0]
+      };
+    })();
+    var child4 = (function () {
+      var child0 = (function () {
+        return {
+          meta: {
+            "fragmentReason": false,
+            "revision": "Ember@2.6.0",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 31,
+                "column": 16
+              },
+              "end": {
+                "line": 31,
+                "column": 47
+              }
+            },
+            "moduleName": "anki-scoreboard/templates/application.hbs"
+          },
+          isEmpty: false,
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("Weapons");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes() {
+            return [];
+          },
+          statements: [],
+          locals: [],
+          templates: []
+        };
+      })();
+      return {
+        meta: {
+          "fragmentReason": false,
+          "revision": "Ember@2.6.0",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 30,
+              "column": 14
+            },
+            "end": {
+              "line": 32,
+              "column": 14
+            }
+          },
+          "moduleName": "anki-scoreboard/templates/application.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("                ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+          return morphs;
+        },
+        statements: [["block", "link-to", ["weapons"], [], 0, null, ["loc", [null, [31, 16], [31, 47]]]]],
+        locals: [],
+        templates: [child0]
+      };
+    })();
+    var child5 = (function () {
+      var child0 = (function () {
+        return {
+          meta: {
+            "fragmentReason": false,
+            "revision": "Ember@2.6.0",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 36,
+                "column": 16
+              },
+              "end": {
+                "line": 36,
                 "column": 43
               }
             },
@@ -886,11 +1062,11 @@ define("anki-scoreboard/templates/application", ["exports"], function (exports) 
           "loc": {
             "source": null,
             "start": {
-              "line": 29,
+              "line": 35,
               "column": 14
             },
             "end": {
-              "line": 31,
+              "line": 37,
               "column": 14
             }
           },
@@ -915,7 +1091,7 @@ define("anki-scoreboard/templates/application", ["exports"], function (exports) 
           morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
           return morphs;
         },
-        statements: [["block", "link-to", ["about"], [], 0, null, ["loc", [null, [30, 16], [30, 43]]]]],
+        statements: [["block", "link-to", ["about"], [], 0, null, ["loc", [null, [36, 16], [36, 43]]]]],
         locals: [],
         templates: [child0]
       };
@@ -934,7 +1110,7 @@ define("anki-scoreboard/templates/application", ["exports"], function (exports) 
             "column": 0
           },
           "end": {
-            "line": 43,
+            "line": 49,
             "column": 0
           }
         },
@@ -1025,6 +1201,10 @@ define("anki-scoreboard/templates/application", ["exports"], function (exports) 
         dom.appendChild(el4, el5);
         var el5 = dom.createComment("");
         dom.appendChild(el4, el5);
+        var el5 = dom.createComment("");
+        dom.appendChild(el4, el5);
+        var el5 = dom.createComment("");
+        dom.appendChild(el4, el5);
         var el5 = dom.createTextNode("            ");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
@@ -1073,17 +1253,19 @@ define("anki-scoreboard/templates/application", ["exports"], function (exports) 
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
         var element0 = dom.childAt(fragment, [0, 1, 7]);
         var element1 = dom.childAt(element0, [1]);
-        var morphs = new Array(5);
+        var morphs = new Array(7);
         morphs[0] = dom.createMorphAt(element1, 1, 1);
         morphs[1] = dom.createMorphAt(element1, 2, 2);
         morphs[2] = dom.createMorphAt(element1, 3, 3);
-        morphs[3] = dom.createMorphAt(dom.childAt(element0, [3]), 1, 1);
-        morphs[4] = dom.createMorphAt(dom.childAt(fragment, [2, 1]), 1, 1);
+        morphs[3] = dom.createMorphAt(element1, 4, 4);
+        morphs[4] = dom.createMorphAt(element1, 5, 5);
+        morphs[5] = dom.createMorphAt(dom.childAt(element0, [3]), 1, 1);
+        morphs[6] = dom.createMorphAt(dom.childAt(fragment, [2, 1]), 1, 1);
         return morphs;
       },
-      statements: [["block", "active-link", [], [], 0, null, ["loc", [null, [18, 14], [20, 30]]]], ["block", "active-link", [], [], 1, null, ["loc", [null, [21, 14], [23, 30]]]], ["block", "active-link", [], [], 2, null, ["loc", [null, [24, 14], [26, 30]]]], ["block", "active-link", [], [], 3, null, ["loc", [null, [29, 14], [31, 30]]]], ["content", "outlet", ["loc", [null, [40, 6], [40, 16]]]]],
+      statements: [["block", "active-link", [], [], 0, null, ["loc", [null, [18, 14], [20, 30]]]], ["block", "active-link", [], [], 1, null, ["loc", [null, [21, 14], [23, 30]]]], ["block", "active-link", [], [], 2, null, ["loc", [null, [24, 14], [26, 30]]]], ["block", "active-link", [], [], 3, null, ["loc", [null, [27, 14], [29, 30]]]], ["block", "active-link", [], [], 4, null, ["loc", [null, [30, 14], [32, 30]]]], ["block", "active-link", [], [], 5, null, ["loc", [null, [35, 14], [37, 30]]]], ["content", "outlet", ["loc", [null, [46, 6], [46, 16]]]]],
       locals: [],
-      templates: [child0, child1, child2, child3]
+      templates: [child0, child1, child2, child3, child4, child5]
     };
   })());
 });
@@ -1355,11 +1537,11 @@ define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
             "loc": {
               "source": null,
               "start": {
-                "line": 37,
+                "line": 16,
                 "column": 14
               },
               "end": {
-                "line": 41,
+                "line": 20,
                 "column": 14
               }
             },
@@ -1390,7 +1572,7 @@ define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
             morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 1, 1);
             return morphs;
           },
-          statements: [["content", "player.name", ["loc", [null, [39, 18], [39, 33]]]]],
+          statements: [["content", "player.name", ["loc", [null, [18, 18], [18, 33]]]]],
           locals: ["player"],
           templates: []
         };
@@ -1402,11 +1584,11 @@ define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
           "loc": {
             "source": null,
             "start": {
-              "line": 32,
+              "line": 11,
               "column": 4
             },
             "end": {
-              "line": 45,
+              "line": 24,
               "column": 4
             }
           },
@@ -1462,7 +1644,7 @@ define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
           morphs[2] = dom.createMorphAt(dom.childAt(element0, [5]), 0, 0);
           return morphs;
         },
-        statements: [["content", "match.type", ["loc", [null, [34, 16], [34, 30]]]], ["block", "each", [["get", "match.players", ["loc", [null, [37, 22], [37, 35]]]]], [], 0, null, ["loc", [null, [37, 14], [41, 23]]]], ["content", "match.date", ["loc", [null, [43, 16], [43, 30]]]]],
+        statements: [["content", "match.type", ["loc", [null, [13, 16], [13, 30]]]], ["block", "each", [["get", "match.players", ["loc", [null, [16, 22], [16, 35]]]]], [], 0, null, ["loc", [null, [16, 14], [20, 23]]]], ["content", "match.date", ["loc", [null, [22, 16], [22, 30]]]]],
         locals: ["match"],
         templates: [child0]
       };
@@ -1481,7 +1663,7 @@ define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
             "column": 0
           },
           "end": {
-            "line": 152,
+            "line": 46,
             "column": 0
           }
         },
@@ -1493,6 +1675,53 @@ define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
       hasRendered: false,
       buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("table");
+        dom.setAttribute(el1, "class", "table");
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("thead");
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("tr");
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("th");
+        var el5 = dom.createTextNode("Type");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("th");
+        var el5 = dom.createTextNode("Players");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("th");
+        var el5 = dom.createTextNode("Date");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n    ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("tbody");
+        var el3 = dom.createTextNode("\n\n");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("    ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n\n");
+        dom.appendChild(el0, el1);
         var el1 = dom.createElement("div");
         dom.setAttribute(el1, "class", "panel panel-default");
         var el2 = dom.createTextNode("\n    ");
@@ -1568,477 +1797,129 @@ define("anki-scoreboard/templates/matches", ["exports"], function (exports) {
         var el2 = dom.createTextNode("\n");
         dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n\n\n\n");
-        dom.appendChild(el0, el1);
-        var el1 = dom.createElement("table");
-        dom.setAttribute(el1, "class", "table");
-        var el2 = dom.createTextNode("\n    ");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createElement("thead");
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("tr");
-        var el4 = dom.createTextNode("\n        ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("th");
-        var el5 = dom.createTextNode("Type");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n        ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("th");
-        var el5 = dom.createTextNode("Players");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n        ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("th");
-        var el5 = dom.createTextNode("Date");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n    ");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n    ");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createElement("tbody");
-        var el3 = dom.createTextNode("\n\n");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createComment("");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("    ");
-        dom.appendChild(el2, el3);
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n\n\n\n    ");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createElement("div");
-        dom.setAttribute(el2, "class", "panel panel-default");
-        var el3 = dom.createTextNode("\n        ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("div");
-        dom.setAttribute(el3, "class", "panel-heading");
-        var el4 = dom.createTextNode("\n            ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("h3");
-        dom.setAttribute(el4, "class", "panel-title");
-        var el5 = dom.createTextNode("Type");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n        ");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n        ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("div");
-        dom.setAttribute(el3, "class", "panel-body");
-        var el4 = dom.createTextNode("\n            ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("main");
-        var el5 = dom.createTextNode("\n                ");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createElement("form");
-        dom.setAttribute(el5, "action", "#");
-        var el6 = dom.createTextNode("\n                    ");
-        dom.appendChild(el5, el6);
-        var el6 = dom.createElement("label");
-        var el7 = dom.createTextNode("Game Type:\n                        ");
-        dom.appendChild(el6, el7);
-        var el7 = dom.createElement("select");
-        dom.setAttribute(el7, "name", "top5");
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("Race");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("Battle");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("King of the Hill");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("Time Trial");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                        ");
-        dom.appendChild(el7, el8);
-        dom.appendChild(el6, el7);
-        var el7 = dom.createTextNode("\n                    ");
-        dom.appendChild(el6, el7);
-        dom.appendChild(el5, el6);
-        var el6 = dom.createTextNode("\n                ");
-        dom.appendChild(el5, el6);
-        dom.appendChild(el4, el5);
-        var el5 = dom.createTextNode("\n            ");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n            ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("button");
-        dom.setAttribute(el4, "type", "submit");
-        dom.setAttribute(el4, "class", "btn btn-default btn-sm");
-        var el5 = dom.createTextNode("\n                ");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createElement("span");
-        dom.setAttribute(el5, "class", "glyphicon glyphicon-plus-sign");
-        dom.setAttribute(el5, "aria-hidden", "true");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createTextNode(" Add Type\n            ");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n\n        ");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n");
-        dom.appendChild(el1, el2);
-        dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n\n");
-        dom.appendChild(el0, el1);
-        var el1 = dom.createElement("table");
-        var el2 = dom.createTextNode("\n    ");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createElement("div");
-        dom.setAttribute(el2, "class", "panel panel-default");
-        var el3 = dom.createTextNode("\n        ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("div");
-        dom.setAttribute(el3, "class", "panel-heading");
-        var el4 = dom.createTextNode("\n            ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("h3");
-        dom.setAttribute(el4, "class", "panel-title");
-        var el5 = dom.createTextNode("Lap");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n        ");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n        ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("div");
-        dom.setAttribute(el3, "class", "panel-body");
-        var el4 = dom.createTextNode("\n            ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("main");
-        var el5 = dom.createTextNode("\n                ");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createElement("form");
-        dom.setAttribute(el5, "action", "#");
-        var el6 = dom.createTextNode("\n                    ");
-        dom.appendChild(el5, el6);
-        var el6 = dom.createElement("label");
-        var el7 = dom.createTextNode("Lap:\n                        ");
-        dom.appendChild(el6, el7);
-        var el7 = dom.createElement("select");
-        dom.setAttribute(el7, "name", "top5");
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("1");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("2");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("3");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("4");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                        ");
-        dom.appendChild(el7, el8);
-        dom.appendChild(el6, el7);
-        var el7 = dom.createTextNode("\n                    ");
-        dom.appendChild(el6, el7);
-        dom.appendChild(el5, el6);
-        var el6 = dom.createTextNode("\n                ");
-        dom.appendChild(el5, el6);
-        dom.appendChild(el4, el5);
-        var el5 = dom.createTextNode("\n            ");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n            ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("button");
-        dom.setAttribute(el4, "type", "submit");
-        dom.setAttribute(el4, "class", "btn btn-default btn-sm");
-        var el5 = dom.createTextNode("\n                ");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createElement("span");
-        dom.setAttribute(el5, "class", "glyphicon glyphicon-plus-sign");
-        dom.setAttribute(el5, "aria-hidden", "true");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createTextNode(" Add lap\n            ");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n\n        ");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n");
-        dom.appendChild(el1, el2);
-        dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n");
-        dom.appendChild(el0, el1);
-        var el1 = dom.createElement("table");
-        var el2 = dom.createTextNode("\n    ");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createElement("div");
-        dom.setAttribute(el2, "class", "panel panel-default");
-        var el3 = dom.createTextNode("\n        ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("div");
-        dom.setAttribute(el3, "class", "panel-heading");
-        var el4 = dom.createTextNode("\n            ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("h3");
-        dom.setAttribute(el4, "class", "panel-title");
-        var el5 = dom.createTextNode("Players");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n        ");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n        ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("div");
-        dom.setAttribute(el3, "class", "panel-body");
-        var el4 = dom.createTextNode("\n            ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("main");
-        var el5 = dom.createTextNode("\n                ");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createElement("form");
-        dom.setAttribute(el5, "action", "#");
-        var el6 = dom.createTextNode("\n                    ");
-        dom.appendChild(el5, el6);
-        var el6 = dom.createElement("label");
-        var el7 = dom.createTextNode("Player:\n                        ");
-        dom.appendChild(el6, el7);
-        var el7 = dom.createElement("select");
-        dom.setAttribute(el7, "name", "top5");
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("/");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("/");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("/");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("/");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                        ");
-        dom.appendChild(el7, el8);
-        dom.appendChild(el6, el7);
-        var el7 = dom.createTextNode("\n                    ");
-        dom.appendChild(el6, el7);
-        dom.appendChild(el5, el6);
-        var el6 = dom.createTextNode("\n                ");
-        dom.appendChild(el5, el6);
-        dom.appendChild(el4, el5);
-        var el5 = dom.createTextNode("\n            ");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n            ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("button");
-        dom.setAttribute(el4, "type", "submit");
-        dom.setAttribute(el4, "class", "btn btn-default btn-sm");
-        var el5 = dom.createTextNode("\n                ");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createElement("span");
-        dom.setAttribute(el5, "class", "glyphicon glyphicon-plus-sign");
-        dom.setAttribute(el5, "aria-hidden", "true");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createTextNode(" Add Player\n            ");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n\n        ");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n");
-        dom.appendChild(el1, el2);
-        dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n");
-        dom.appendChild(el0, el1);
-        var el1 = dom.createElement("table");
-        var el2 = dom.createTextNode("\n    ");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createElement("div");
-        dom.setAttribute(el2, "class", "panel panel-default");
-        var el3 = dom.createTextNode("\n        ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("div");
-        dom.setAttribute(el3, "class", "panel-heading");
-        var el4 = dom.createTextNode("\n            ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("h3");
-        dom.setAttribute(el4, "class", "panel-title");
-        var el5 = dom.createTextNode("Cars");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n        ");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n        ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("div");
-        dom.setAttribute(el3, "class", "panel-body");
-        var el4 = dom.createTextNode("\n            ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("main");
-        var el5 = dom.createTextNode("\n                ");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createElement("form");
-        dom.setAttribute(el5, "action", "#");
-        var el6 = dom.createTextNode("\n                    ");
-        dom.appendChild(el5, el6);
-        var el6 = dom.createElement("label");
-        var el7 = dom.createTextNode("Car:\n                        ");
-        dom.appendChild(el6, el7);
-        var el7 = dom.createElement("select");
-        dom.setAttribute(el7, "name", "top5");
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("Nuke");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("Guardian");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("Thermo");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("Big Bang");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("Shock");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                            ");
-        dom.appendChild(el7, el8);
-        var el8 = dom.createElement("option");
-        var el9 = dom.createTextNode("Skull");
-        dom.appendChild(el8, el9);
-        dom.appendChild(el7, el8);
-        var el8 = dom.createTextNode("\n                        ");
-        dom.appendChild(el7, el8);
-        dom.appendChild(el6, el7);
-        var el7 = dom.createTextNode("\n                    ");
-        dom.appendChild(el6, el7);
-        dom.appendChild(el5, el6);
-        var el6 = dom.createTextNode("\n                ");
-        dom.appendChild(el5, el6);
-        dom.appendChild(el4, el5);
-        var el5 = dom.createTextNode("\n            ");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n            ");
-        dom.appendChild(el3, el4);
-        var el4 = dom.createElement("button");
-        dom.setAttribute(el4, "type", "submit");
-        dom.setAttribute(el4, "class", "btn btn-default btn-sm");
-        var el5 = dom.createTextNode("\n                ");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createElement("span");
-        dom.setAttribute(el5, "class", "glyphicon glyphicon-plus-sign");
-        dom.setAttribute(el5, "aria-hidden", "true");
-        dom.appendChild(el4, el5);
-        var el5 = dom.createTextNode(" Add Car\n            ");
-        dom.appendChild(el4, el5);
-        dom.appendChild(el3, el4);
-        var el4 = dom.createTextNode("\n\n        ");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n");
-        dom.appendChild(el1, el2);
-        dom.appendChild(el0, el1);
         var el1 = dom.createTextNode("\n");
         dom.appendChild(el0, el1);
         return el0;
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-        var element1 = dom.childAt(fragment, [0, 3, 1]);
+        var element1 = dom.childAt(fragment, [2, 3, 1]);
         var element2 = dom.childAt(element1, [5]);
-        var element3 = dom.childAt(fragment, [2]);
-        var element4 = dom.childAt(element3, [5, 3, 3]);
-        var element5 = dom.childAt(fragment, [4, 1, 3, 3]);
-        var element6 = dom.childAt(fragment, [6, 1, 3, 3]);
-        var element7 = dom.childAt(fragment, [8, 1, 3, 3]);
-        var morphs = new Array(8);
-        morphs[0] = dom.createMorphAt(dom.childAt(element1, [1]), 3, 3);
-        morphs[1] = dom.createMorphAt(dom.childAt(element1, [3]), 3, 3);
-        morphs[2] = dom.createElementMorph(element2);
-        morphs[3] = dom.createMorphAt(dom.childAt(element3, [3]), 1, 1);
-        morphs[4] = dom.createElementMorph(element4);
-        morphs[5] = dom.createElementMorph(element5);
-        morphs[6] = dom.createElementMorph(element6);
-        morphs[7] = dom.createElementMorph(element7);
+        var morphs = new Array(4);
+        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0, 3]), 1, 1);
+        morphs[1] = dom.createMorphAt(dom.childAt(element1, [1]), 3, 3);
+        morphs[2] = dom.createMorphAt(dom.childAt(element1, [3]), 3, 3);
+        morphs[3] = dom.createElementMorph(element2);
         return morphs;
       },
-      statements: [["inline", "select-2", [], ["id", "matchTypeField", "content", ["subexpr", "@mut", [["get", "matchTypes", ["loc", [null, [7, 53], [7, 63]]]]], [], []], "value", ["subexpr", "@mut", [["get", "matchType", ["loc", [null, [7, 70], [7, 79]]]]], [], []], "placeholder", "Choose type ...", "allowClear", false], ["loc", [null, [7, 14], [7, 129]]]], ["inline", "select-2", [], ["id", "playerSelection", "content", ["subexpr", "@mut", [["get", "availablePlayers", ["loc", [null, [11, 54], [11, 70]]]]], [], []], "value", ["subexpr", "@mut", [["get", "selectedPlayers", ["loc", [null, [11, 77], [11, 92]]]]], [], []], "multiple", true, "optionLabelPath", "name", "placeholder", "Choose Players ..."], ["loc", [null, [11, 14], [11, 164]]]], ["element", "action", ["addMatch", ["get", "matchType", ["loc", [null, [13, 78], [13, 87]]]], ["get", "selectedPlayers", ["loc", [null, [13, 88], [13, 103]]]]], [], ["loc", [null, [13, 58], [13, 105]]]], ["block", "each", [["get", "model", ["loc", [null, [32, 12], [32, 17]]]]], [], 0, null, ["loc", [null, [32, 4], [45, 13]]]], ["element", "action", ["createPlayer", ["get", "playerName", ["loc", [null, [67, 89], [67, 99]]]]], [], ["loc", [null, [67, 65], [67, 101]]]], ["element", "action", ["createPlayer", ["get", "playerName", ["loc", [null, [93, 89], [93, 99]]]]], [], ["loc", [null, [93, 65], [93, 101]]]], ["element", "action", ["createPlayer", ["get", "playerName", ["loc", [null, [118, 89], [118, 99]]]]], [], ["loc", [null, [118, 65], [118, 101]]]], ["element", "action", ["createPlayer", ["get", "playerName", ["loc", [null, [145, 89], [145, 99]]]]], [], ["loc", [null, [145, 65], [145, 101]]]]],
+      statements: [["block", "each", [["get", "model", ["loc", [null, [11, 12], [11, 17]]]]], [], 0, null, ["loc", [null, [11, 4], [24, 13]]]], ["inline", "select-2", [], ["id", "matchTypeField", "content", ["subexpr", "@mut", [["get", "matchTypes", ["loc", [null, [34, 53], [34, 63]]]]], [], []], "value", ["subexpr", "@mut", [["get", "matchType", ["loc", [null, [34, 70], [34, 79]]]]], [], []], "placeholder", "Choose type ...", "allowClear", false], ["loc", [null, [34, 14], [34, 129]]]], ["inline", "select-2", [], ["id", "playerSelection", "content", ["subexpr", "@mut", [["get", "availablePlayers", ["loc", [null, [38, 54], [38, 70]]]]], [], []], "value", ["subexpr", "@mut", [["get", "selectedPlayers", ["loc", [null, [38, 77], [38, 92]]]]], [], []], "multiple", true, "optionLabelPath", "name", "placeholder", "Choose Players ..."], ["loc", [null, [38, 14], [38, 164]]]], ["element", "action", ["addMatch", ["get", "matchType", ["loc", [null, [40, 78], [40, 87]]]], ["get", "selectedPlayers", ["loc", [null, [40, 88], [40, 103]]]]], [], ["loc", [null, [40, 58], [40, 105]]]]],
       locals: [],
       templates: [child0]
+    };
+  })());
+});
+define("anki-scoreboard/templates/play", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "fragmentReason": {
+          "name": "triple-curlies"
+        },
+        "revision": "Ember@2.6.0",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 10,
+            "column": 6
+          }
+        },
+        "moduleName": "anki-scoreboard/templates/play.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1, "class", "row");
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2, "class", "col-md-4");
+        var el3 = dom.createElement("input");
+        dom.setAttribute(el3, "type", "range");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2, "class", "col-md-4");
+        var el3 = dom.createTextNode("\n            ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "style", "background-color: #CC6600;float:left;");
+        var el4 = dom.createElement("img");
+        dom.setAttribute(el4, "src", "");
+        dom.setAttribute(el4, "width", "100");
+        dom.setAttribute(el4, "height", "100");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n            ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "style", "background-color: #CC6600;float:left;");
+        var el4 = dom.createElement("img");
+        dom.setAttribute(el4, "src", "");
+        dom.setAttribute(el4, "width", "100");
+        dom.setAttribute(el4, "height", "100");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n            ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "style", "background-color: #CC6600;float:left;");
+        var el4 = dom.createElement("img");
+        dom.setAttribute(el4, "src", "");
+        dom.setAttribute(el4, "width", "100");
+        dom.setAttribute(el4, "height", "100");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n            ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "style", "background-color: #CC6600;float:left;");
+        var el4 = dom.createElement("img");
+        dom.setAttribute(el4, "src", "");
+        dom.setAttribute(el4, "width", "100");
+        dom.setAttribute(el4, "height", "100");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2, "class", "col-md-4");
+        var el3 = dom.createElement("input");
+        dom.setAttribute(el3, "type", "range");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes() {
+        return [];
+      },
+      statements: [],
+      locals: [],
+      templates: []
     };
   })());
 });
@@ -3215,6 +3096,98 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
     };
   })());
 });
+define("anki-scoreboard/templates/weapons", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "fragmentReason": {
+          "name": "triple-curlies"
+        },
+        "revision": "Ember@2.6.0",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 9,
+            "column": 0
+          }
+        },
+        "moduleName": "anki-scoreboard/templates/weapons.hbs"
+      },
+      isEmpty: false,
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1, "class", "row");
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2, "class", "col-md-12");
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "style", "background-color: #CC6600;float:left;");
+        var el4 = dom.createElement("img");
+        dom.setAttribute(el4, "src", "");
+        dom.setAttribute(el4, "width", "100");
+        dom.setAttribute(el4, "height", "100");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "style", "background-color: #CC6600;float:left;");
+        var el4 = dom.createElement("img");
+        dom.setAttribute(el4, "src", "");
+        dom.setAttribute(el4, "width", "100");
+        dom.setAttribute(el4, "height", "100");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "style", "background-color: #CC6600;float:left;");
+        var el4 = dom.createElement("img");
+        dom.setAttribute(el4, "src", "");
+        dom.setAttribute(el4, "width", "100");
+        dom.setAttribute(el4, "height", "100");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3, "style", "background-color: #CC6600;float:left;");
+        var el4 = dom.createElement("img");
+        dom.setAttribute(el4, "src", "");
+        dom.setAttribute(el4, "width", "100");
+        dom.setAttribute(el4, "height", "100");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes() {
+        return [];
+      },
+      statements: [],
+      locals: [],
+      templates: []
+    };
+  })());
+});
 define('anki-scoreboard/tests/mirage/mirage/config.jshint', ['exports'], function (exports) {
   QUnit.module('JSHint | mirage/config.js');
   QUnit.test('should pass jshint', function (assert) {
@@ -3289,7 +3262,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("anki-scoreboard/app")["default"].create({"name":"anki-scoreboard","version":"0.0.0+7a76d839"});
+  require("anki-scoreboard/app")["default"].create({"LOCALE":"en","name":"anki-scoreboard","version":"0.0.0+10f489d5"});
 }
 
 /* jshint ignore:end */

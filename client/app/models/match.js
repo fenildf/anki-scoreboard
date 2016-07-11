@@ -7,9 +7,5 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 export default Model.extend({
   date: attr('date'),
   type: attr('string'),
-  players: hasMany("players"),
-  availablePlayers: Ember.computed(function() {
-    return this.store.findAll('player');
-  })
-
+  players: hasMany("players")
 });

@@ -282,13 +282,31 @@ define('anki-scoreboard/tests/integration/components/player-list-test.jshint', [
     assert.ok(true, 'integration/components/player-list-test.js should pass jshint.');
   });
 });
+define('anki-scoreboard/tests/locales/en-cldr.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | locales/en-cldr.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'locales/en-cldr.js should pass jshint.\nlocales/en-cldr.js: line 1, col 178, Expected \'{\' and instead saw \'return\'.\n\n1 error');
+  });
+});
+define('anki-scoreboard/tests/locales/en.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | locales/en.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'locales/en.js should pass jshint.');
+  });
+});
 define('anki-scoreboard/tests/models/match.jshint', ['exports'], function (exports) {
   'use strict';
 
   QUnit.module('JSHint | models/match.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'models/match.js should pass jshint.\nmodels/match.js: line 5, col 10, \'belongsTo\' is defined but never used.\n\n1 error');
+    assert.ok(false, 'models/match.js should pass jshint.\nmodels/match.js: line 1, col 8, \'Ember\' is defined but never used.\nmodels/match.js: line 5, col 10, \'belongsTo\' is defined but never used.\n\n2 errors');
   });
 });
 define('anki-scoreboard/tests/models/player.jshint', ['exports'], function (exports) {
@@ -345,6 +363,15 @@ define('anki-scoreboard/tests/routes/matches.jshint', ['exports'], function (exp
     assert.ok(true, 'routes/matches.js should pass jshint.');
   });
 });
+define('anki-scoreboard/tests/routes/play.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/play.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/play.js should pass jshint.');
+  });
+});
 define('anki-scoreboard/tests/routes/players.jshint', ['exports'], function (exports) {
   'use strict';
 
@@ -361,6 +388,15 @@ define('anki-scoreboard/tests/routes/results.jshint', ['exports'], function (exp
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(false, 'routes/results.js should pass jshint.\nroutes/results.js: line 2, col 8, \'_\' is defined but never used.\n\n1 error');
+  });
+});
+define('anki-scoreboard/tests/routes/weapons.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/weapons.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/weapons.js should pass jshint.');
   });
 });
 define('anki-scoreboard/tests/serializers/application.jshint', ['exports'], function (exports) {
@@ -559,6 +595,27 @@ define('anki-scoreboard/tests/unit/routes/matches-test.jshint', ['exports'], fun
     assert.ok(true, 'unit/routes/matches-test.js should pass jshint.');
   });
 });
+define('anki-scoreboard/tests/unit/routes/play-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:play', 'Unit | Route | play', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('anki-scoreboard/tests/unit/routes/play-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/play-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/play-test.js should pass jshint.');
+  });
+});
 define('anki-scoreboard/tests/unit/routes/players-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleFor)('route:players', 'Unit | Route | players', {
@@ -599,6 +656,27 @@ define('anki-scoreboard/tests/unit/routes/results-test.jshint', ['exports'], fun
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/routes/results-test.js should pass jshint.');
+  });
+});
+define('anki-scoreboard/tests/unit/routes/weapons-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:weapons', 'Unit | Route | weapons', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('anki-scoreboard/tests/unit/routes/weapons-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/weapons-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/weapons-test.js should pass jshint.');
   });
 });
 define('anki-scoreboard/tests/unit/serializers/application-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {

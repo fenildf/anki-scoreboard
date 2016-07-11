@@ -1,24 +1,3 @@
-<div class="panel panel-default">
-    <div class="panel-heading">Add Match</div>
-    <div class="panel-body">
-        <form>
-            <div class="form-group">
-                <label for="matchTypeField">Match Type</label>
-              {{select-2 id="matchTypeField" content=matchTypes value=matchType placeholder="Choose type ..." allowClear=false }}
-            </div>
-            <div class="form-group">
-                <label for="playerSelection">Players</label>
-              {{select-2 id="playerSelection" content=availablePlayers value=selectedPlayers multiple=true optionLabelPath="name" placeholder="Choose Players ..."}}
-            </div>
-            <button type="submit" class="btn btn-default" {{action "addMatch" matchType selectedPlayers}}>
-                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Match
-            </button>
-        </form>
-    </div>
-</div>
-
-
-
 <table class="table">
     <thead>
     <tr>
@@ -44,108 +23,23 @@
         </tr>
     {{/each}}
     </tbody>
-
-
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Type</h3>
-        </div>
-        <div class="panel-body">
-            <main>
-                <form action="#">
-                    <label>Game Type:
-                        <select name="top5">
-                            <option>Race</option>
-                            <option>Battle</option>
-                            <option>King of the Hill</option>
-                            <option>Time Trial</option>
-                        </select>
-                    </label>
-                </form>
-            </main>
-            <button type="submit" class="btn btn-default btn-sm" {{action "createPlayer" playerName}}>
-                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Type
-            </button>
-
-        </div>
-    </div>
 </table>
 
-<table>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Lap</h3>
-        </div>
-        <div class="panel-body">
-            <main>
-                <form action="#">
-                    <label>Lap:
-                        <select name="top5">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>
-                    </label>
-                </form>
-            </main>
-            <button type="submit" class="btn btn-default btn-sm" {{action "createPlayer" playerName}}>
-                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add lap
+<div class="panel panel-default">
+    <div class="panel-heading">Add Match</div>
+    <div class="panel-body">
+        <form>
+            <div class="form-group">
+                <label for="matchTypeField">Match Type</label>
+              {{select-2 id="matchTypeField" content=matchTypes value=matchType placeholder="Choose type ..." allowClear=false }}
+            </div>
+            <div class="form-group">
+                <label for="playerSelection">Players</label>
+              {{select-2 id="playerSelection" content=availablePlayers value=selectedPlayers multiple=true optionLabelPath="name" placeholder="Choose Players ..."}}
+            </div>
+            <button type="submit" class="btn btn-default" {{action "addMatch" matchType selectedPlayers}}>
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Match
             </button>
-
-        </div>
+        </form>
     </div>
-</table>
-<table>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Players</h3>
-        </div>
-        <div class="panel-body">
-            <main>
-                <form action="#">
-                    <label>Player:
-                        <select name="top5">
-                            <option>/</option>
-                            <option>/</option>
-                            <option>/</option>
-                            <option>/</option>
-                        </select>
-                    </label>
-                </form>
-            </main>
-            <button type="submit" class="btn btn-default btn-sm" {{action "createPlayer" playerName}}>
-                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Player
-            </button>
-
-        </div>
-    </div>
-</table>
-<table>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Cars</h3>
-        </div>
-        <div class="panel-body">
-            <main>
-                <form action="#">
-                    <label>Car:
-                        <select name="top5">
-                            <option>Nuke</option>
-                            <option>Guardian</option>
-                            <option>Thermo</option>
-                            <option>Big Bang</option>
-                            <option>Shock</option>
-                            <option>Skull</option>
-                        </select>
-                    </label>
-                </form>
-            </main>
-            <button type="submit" class="btn btn-default btn-sm" {{action "createPlayer" playerName}}>
-                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Car
-            </button>
-
-        </div>
-    </div>
-</table>
+</div>

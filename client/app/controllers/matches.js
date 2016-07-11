@@ -15,8 +15,15 @@ export default Ember.Controller.extend({
 
     addMatch(type, players) {
       console.log("Adding match with type '" + type.id + "' and players: " + players);
+
+      // Create and save a new match with the provided data
+      var matchAttributes = {
+        date: new Date(),
+        type: type.id,
+        players:  players,
+      };
+      this.store.createRecord('match', matchAttributes);
+
     }
-
-  }
-
+}
 });
