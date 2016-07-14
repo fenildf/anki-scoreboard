@@ -3,8 +3,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 // database  connection
-const DB_HOST = "localhost";
-const DB_PORT = "27017";
+const DB_HOST = "192.168.99.100";
+const DB_PORT = "32768";
 const DB_NAME = "ankiScores";
 
 var app = express();
@@ -28,13 +28,9 @@ var playerSchema = new mongoose.Schema({
 });
 
 var matchesSchema = new mongoose.Schema({
-  matchdata:{
-    date:'Date'
-  },
-  players:[{
-    player:{type: 'ObjectId', ref: 'players'},
-    pos:'Number'
-  }]
+  type: 'string',
+  date: 'Date',
+  players: [{type: 'ObjectId', ref: 'players'}]
 });
 
 var Player = mongoose.model('players', playerSchema);
@@ -74,9 +70,13 @@ app.get('/api/matches/:id', function(req,res) {
   );
 });
 
-app.post('/api/match', function(req,res) {
-  //var playerName = req.body.player.name;
-
+app.post('/api/matches', function(req,res) {
+  var matchType = req.body.match.type;
+  var matchDate = req.body.match.date;
+  var matchPlayers = req.body.match.players;
+  if (matchType) {
+    new Match({type: matchType, date: matchDate, players: matchPlayers}).save();
+  }
 });
 
 
@@ -108,10 +108,31 @@ app.post('/api/players', function(req,res) {
   var playerName = req.body.player.name;
   console.log("POST to players: " + playerName);
   if (playerName && playerName !== "") {
-    new Player({name: playerName}).save();
+    new Player({name: playerName, matches: []}).save();
   }
 });
 
 /**---------------------PLAYER END ----------------------*/
+
+
+/** --------- RESULTS START --------------*/
+app.get('/api/results', function(req,res) {
+
+
+
+  Match.find({}).populate('players.player').exec(
+          function(err,match) {
+            if(err) {
+              res.send({error:err});
+            }
+            else {
+              console.log(err);
+              res.send({matches:match});
+            }
+          }
+  );
+});
+
+/** --------- RESULTS END ----------------*/
 
 app.listen('4500');

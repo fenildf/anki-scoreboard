@@ -20,9 +20,12 @@ export default Ember.Controller.extend({
       var matchAttributes = {
         date: new Date(),
         type: type.id,
-        players:  players,
+        players:  players
       };
-      this.store.createRecord('match', matchAttributes);
+      var newMatch = this.store.createRecord('match', matchAttributes);
+      if (newMatch) {
+        newMatch.save();
+      }
 
     }
 }

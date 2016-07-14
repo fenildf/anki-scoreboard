@@ -26,11 +26,13 @@ export default function () {
 
   this.get('/players');
   this.get('/players/:id');
-  //this.passthrough("/players");
-  //this.passthrough("/players/:id");
+  this.passthrough("/players");
+  this.passthrough("/players/:id");
 
   this.get('/matches');
   this.get('/matches/:id');
+  this.passthrough("/matches");
+  this.passthrough("/matches/:id");
 
   //this.passthrough("/matches");
   //this.passthrough("/matches/:id");

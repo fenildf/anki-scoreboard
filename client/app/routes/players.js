@@ -22,7 +22,10 @@ export default Ember.Route.extend({
           var playerAttributes = {name: playerName};
           var existingPlayers = this.store.peekAll('player');
           if (playerName && playerName !== "" && existingPlayers.findBy("name", playerName) === undefined) {
-           this.store.createRecord('player', playerAttributes);
+            var newPlayer = this.store.createRecord('player', playerAttributes);
+            if (newPlayer) {
+              newPlayer.save();
+            }
           }
 
           console.log(i+"="+playerName);
