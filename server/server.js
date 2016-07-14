@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var _ = require('underscore');
 
 // database  connection
 const DB_HOST = "192.168.99.100";
@@ -49,7 +50,6 @@ app.get('/api/matches', function(req,res) {
           res.send({error:err});
         }
         else {
-          console.log(err);
           res.send({matches:match});
         }
       }
@@ -63,7 +63,6 @@ app.get('/api/matches/:id', function(req,res) {
           res.send({error:err});
         }
         else {
-          console.log(err);
           res.send({matches:match});
         }
       }
@@ -93,7 +92,8 @@ app.get('/api/players', function(req,res) {
 });
 
 app.get('/api/players/:id', function(req,res) {
-  console.log("Fetch player with id " + req.params.id);
+  var id = req.params.id;
+  console.log("Fetch player with id " + id);
   Player.find({_id: id},function(err,docs) {
     if(err) {
       res.send({error:err});
@@ -118,16 +118,78 @@ app.post('/api/players', function(req,res) {
 /** --------- RESULTS START --------------*/
 app.get('/api/results', function(req,res) {
 
+  Match.find({}).populate('players').exec(
+          function(err,matches) {
+
+            var results = [];
+
+            // Loop: matches
+            for (var i=0; i < matches.length; i++) {
+              var match = matches[i];
+              var players = match.players;
 
 
-  Match.find({}).populate('players.player').exec(
-          function(err,match) {
+              // Loop: players
+              for (var j=0; j < players.length; j++) {
+
+                var player = players[j];
+
+                var points = 0;
+                switch (j) {
+
+                  case 0:
+                    points = 10;
+                    break;
+
+                  case 1:
+                    points = 5;
+                    break;
+
+                  case 2:
+                    points = 2;
+                    break;
+
+                  default:
+                    points = 0;
+                }
+
+                // Check if player already contained in results
+                var p = _.find(results, function(result){
+                  return result.player == player;
+                });
+
+                var totalPoints = points;
+                if (p) {
+                  totalPoints = p.total + points;
+                  p.total = totalPoints;
+                } else {
+                  results.push({player: player, total: totalPoints});
+                }
+                //console.log("#" + (j + 1) + " " + player.name + " --> " + totalPoints);
+
+              } // end loop: players
+
+            } // end loop: matches
+
+            // Sort results ASC
+            var sortedResults = _.sortBy(results, function(result){
+              return result.total;
+            });
+
+            // Reverse sorted results to DSC
+            sortedResults.reverse();
+
+            // Add rank
+            _.each(sortedResults, function(result, index) {
+              _.extend(result, {rank: index+1});
+            });
+
             if(err) {
               res.send({error:err});
             }
             else {
               console.log(err);
-              res.send({matches:match});
+              res.send({results:sortedResults});
             }
           }
   );

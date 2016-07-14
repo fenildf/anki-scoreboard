@@ -9,15 +9,19 @@
         <th>#</th>
         <th>Player</th>
         <th>Points</th>
+        <th>Won</th>
+        <th>Lost</th>
     </tr>
     </thead>
     <tbody>
 
-    {{#each model as |result|}}
+    {{#each model.results as |result|}}
         <tr>
-            <th scope="row">???</th>
-            <td>{{result.player}}</td>
-            <td>{{result.points}}</td>
+            <th scope="row">{{result.rank}}</th>
+            <td>{{result.player.name}}</td>
+            <td>{{result.total}}</td>
+            <td>???</td>
+            <td>???</td>
         </tr>
     {{/each}}
     </tbody>

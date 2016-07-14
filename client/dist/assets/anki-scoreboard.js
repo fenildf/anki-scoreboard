@@ -69,7 +69,10 @@ define("anki-scoreboard/controllers/matches", ["exports", "ember"], function (ex
           type: type.id,
           players: players
         };
-        this.store.createRecord('match', matchAttributes);
+        var newMatch = this.store.createRecord('match', matchAttributes);
+        if (newMatch) {
+          newMatch.save();
+        }
       }
     }
   });
@@ -282,13 +285,6 @@ define("anki-scoreboard/instance-initializers/ember-data", ["exports", "ember-da
     initialize: _emberDataPrivateInstanceInitializersInitializeStoreService["default"]
   };
 });
-define("anki-scoreboard/locales/en-cldr", ["exports"], function (exports) {
-  exports["default"] = { "locale": "en", "pluralRuleFunction": function pluralRuleFunction(n /**/) {
-      var i = Math.floor(Math.abs(n)),
-          v = n.toString().replace(/^[^.]*\.?/, "").length;n = Math.floor(n);if (i === 1 && v === 0) return "one";return "other";
-    }, "fields": { "era": { "displayName": "Era" }, "year": { "displayName": "Year", "relative": { "0": "this year", "1": "next year", "-1": "last year" }, "relativeTime": { "future": { "one": "in {0} year", "other": "in {0} years" }, "past": { "one": "{0} year ago", "other": "{0} years ago" } } }, "year-short": { "displayName": "yr.", "relative": { "0": "this yr.", "1": "next yr.", "-1": "last yr." }, "relativeTime": { "future": { "one": "in {0} yr.", "other": "in {0} yr." }, "past": { "one": "{0} yr. ago", "other": "{0} yr. ago" } } }, "quarter": { "displayName": "Quarter", "relative": { "0": "this quarter", "1": "next quarter", "-1": "last quarter" }, "relativeTime": { "future": { "one": "in {0} quarter", "other": "in {0} quarters" }, "past": { "one": "{0} quarter ago", "other": "{0} quarters ago" } } }, "quarter-short": { "displayName": "qtr.", "relative": { "0": "this qtr.", "1": "next qtr.", "-1": "last qtr." }, "relativeTime": { "future": { "one": "in {0} qtr.", "other": "in {0} qtrs." }, "past": { "one": "{0} qtr. ago", "other": "{0} qtrs. ago" } } }, "month": { "displayName": "Month", "relative": { "0": "this month", "1": "next month", "-1": "last month" }, "relativeTime": { "future": { "one": "in {0} month", "other": "in {0} months" }, "past": { "one": "{0} month ago", "other": "{0} months ago" } } }, "month-short": { "displayName": "mo.", "relative": { "0": "this mo.", "1": "next mo.", "-1": "last mo." }, "relativeTime": { "future": { "one": "in {0} mo.", "other": "in {0} mo." }, "past": { "one": "{0} mo. ago", "other": "{0} mo. ago" } } }, "week": { "displayName": "Week", "relative": { "0": "this week", "1": "next week", "-1": "last week" }, "relativeTime": { "future": { "one": "in {0} week", "other": "in {0} weeks" }, "past": { "one": "{0} week ago", "other": "{0} weeks ago" } } }, "week-short": { "displayName": "wk.", "relative": { "0": "this wk.", "1": "next wk.", "-1": "last wk." }, "relativeTime": { "future": { "one": "in {0} wk.", "other": "in {0} wk." }, "past": { "one": "{0} wk. ago", "other": "{0} wk. ago" } } }, "day": { "displayName": "Day", "relative": { "0": "today", "1": "tomorrow", "-1": "yesterday" }, "relativeTime": { "future": { "one": "in {0} day", "other": "in {0} days" }, "past": { "one": "{0} day ago", "other": "{0} days ago" } } }, "day-short": { "displayName": "day" }, "weekday": { "displayName": "Day of the Week" }, "dayperiod": { "displayName": "AM/PM" }, "hour": { "displayName": "Hour", "relativeTime": { "future": { "one": "in {0} hour", "other": "in {0} hours" }, "past": { "one": "{0} hour ago", "other": "{0} hours ago" } } }, "hour-short": { "displayName": "hr.", "relativeTime": { "future": { "one": "in {0} hr.", "other": "in {0} hr." }, "past": { "one": "{0} hr. ago", "other": "{0} hr. ago" } } }, "minute": { "displayName": "Minute", "relativeTime": { "future": { "one": "in {0} minute", "other": "in {0} minutes" }, "past": { "one": "{0} minute ago", "other": "{0} minutes ago" } } }, "minute-short": { "displayName": "min.", "relativeTime": { "future": { "one": "in {0} min.", "other": "in {0} min." }, "past": { "one": "{0} min. ago", "other": "{0} min. ago" } } }, "second": { "displayName": "Second", "relative": { "0": "now" }, "relativeTime": { "future": { "one": "in {0} second", "other": "in {0} seconds" }, "past": { "one": "{0} second ago", "other": "{0} seconds ago" } } }, "second-short": { "displayName": "sec.", "relative": { "0": "now" }, "relativeTime": { "future": { "one": "in {0} sec.", "other": "in {0} sec." }, "past": { "one": "{0} sec. ago", "other": "{0} sec. ago" } } }, "zone": { "displayName": "Time Zone" }, "sun": { "relative": { "0": "this Sunday", "1": "next Sunday", "-1": "last Sunday" } }, "sun-short": { "relative": { "0": "this Sun.", "1": "next Sun.", "-1": "last Sun." } }, "sun-narrow": { "relative": { "0": "this Su", "1": "next Su", "-1": "last Su" } }, "mon": { "relative": { "0": "this Monday", "1": "next Monday", "-1": "last Monday" } }, "mon-short": { "relative": { "0": "this Mon.", "1": "next Mon.", "-1": "last Mon." } }, "mon-narrow": { "relative": { "0": "this M", "1": "next M", "-1": "last M" } }, "tue": { "relative": { "0": "this Tuesday", "1": "next Tuesday", "-1": "last Tuesday" } }, "tue-short": { "relative": { "0": "this Tue.", "1": "next Tue.", "-1": "last Tue." } }, "tue-narrow": { "relative": { "0": "this Tu", "1": "next Tu", "-1": "last Tu" } }, "wed": { "relative": { "0": "this Wednesday", "1": "next Wednesday", "-1": "last Wednesday" } }, "wed-short": { "relative": { "0": "this Wed.", "1": "next Wed.", "-1": "last Wed." } }, "wed-narrow": { "relative": { "0": "this W", "1": "next W", "-1": "last W" } }, "thu": { "relative": { "0": "this Thursday", "1": "next Thursday", "-1": "last Thursday" } }, "thu-short": { "relative": { "0": "this Thu.", "1": "next Thu.", "-1": "last Thu." } }, "thu-narrow": { "relative": { "0": "this Th", "1": "next Th", "-1": "last Th" } }, "fri": { "relative": { "0": "this Friday", "1": "next Friday", "-1": "last Friday" } }, "fri-short": { "relative": { "0": "this Fri.", "1": "next Fri.", "-1": "last Fri." } }, "fri-narrow": { "relative": { "0": "this F", "1": "next F", "-1": "last F" } }, "sat": { "relative": { "0": "this Saturday", "1": "next Saturday", "-1": "last Saturday" } }, "sat-short": { "relative": { "0": "this Sat.", "1": "next Sat.", "-1": "last Sat." } }, "sat-narrow": { "relative": { "0": "this Sa", "1": "next Sa", "-1": "last Sa" } } } };
-});
-define("anki-scoreboard/locales/en", ["exports"], function (exports) {});
 define('anki-scoreboard/mirage/config', ['exports'], function (exports) {
   exports['default'] = function () {
 
@@ -315,38 +311,20 @@ define('anki-scoreboard/mirage/config', ['exports'], function (exports) {
 
     this.get('/players');
     this.get('/players/:id');
-    //this.passthrough("/players");
-    //this.passthrough("/players/:id");
+    this.passthrough('/players');
+    this.passthrough('/players/:id');
 
     this.get('/matches');
     this.get('/matches/:id');
+    this.passthrough('/matches');
+    this.passthrough('/matches/:id');
 
-    //this.passthrough("/matches");
-    //this.passthrough("/matches/:id");
-
-    //this.get('/players', function () {
-    //  return {
-    //    players: [
-    //      {_id: "5773e621eb00a90afc181a67", name: "Alice"},
-    //      {_id: "2", name: "Bla"},
-    //      {_id: "3", name: "Blub"}
-    //    ]
-    //  };
-    //});
-    //
-    //this.get('/players/:id');
-    //
-    //this.get('/players/5773e621eb00a90afc181a67', function () {
-    //  return {_id: "5773e621eb00a90afc181a67", name: "Alice"};
-    //});
-
-    //this.get('/matches', function () {
-    //  return {
-    //    matches: [
-    //      {_id: "1", date: "2016-07-01T10:30:00", type: "koth", players: ["5773e621eb00a90afc181a67"]}
-    //    ]
-    //  };
-    //});
+    this.get('/results', function () {
+      return {
+        results: []
+      };
+    });
+    this.passthrough('/results');
   };
 });
 define("anki-scoreboard/mirage/factories/matches", ["exports", "ember-cli-mirage"], function (exports, _emberCliMirage) {
@@ -489,7 +467,10 @@ define('anki-scoreboard/routes/players', ['exports', 'ember'], function (exports
             var playerAttributes = { name: playerName };
             var existingPlayers = this.store.peekAll('player');
             if (playerName && playerName !== "" && existingPlayers.findBy("name", playerName) === undefined) {
-              this.store.createRecord('player', playerAttributes);
+              var newPlayer = this.store.createRecord('player', playerAttributes);
+              if (newPlayer) {
+                newPlayer.save();
+              }
             }
 
             console.log(i + "=" + playerName);
@@ -500,59 +481,11 @@ define('anki-scoreboard/routes/players', ['exports', 'ember'], function (exports
 
   });
 });
-define('anki-scoreboard/routes/results', ['exports', 'ember', 'underscore'], function (exports, _ember, _underscore) {
-  exports['default'] = _ember['default'].Route.extend({
+define("anki-scoreboard/routes/results", ["exports", "ember"], function (exports, _ember) {
+  exports["default"] = _ember["default"].Route.extend({
 
     model: function model() {
-
-      var results = [];
-
-      this.store.findAll('match', { reload: true }).then(function (matches) {
-        matches.forEach(function (match) {
-          console.log("MATCH " + match.get('id'));
-
-          match.get('players').then(function (players) {
-            players.forEach(function (player, index) {
-
-              var points = 0;
-              switch (index) {
-
-                case 0:
-                  points = 10;
-                  break;
-
-                case 1:
-                  points = 5;
-                  break;
-
-                case 2:
-                  points = 2;
-                  break;
-
-                default:
-                  points = 0;
-              }
-
-              console.log("#" + (index + 1) + " " + player.get('name') + " --> " + points);
-
-              results.push({ player: player, total: points });
-            });
-          });
-        });
-      });
-
-      console.log("--- RESULTS --");
-      console.log(results);
-      console.log("-----");
-
-      var rank1 = { player: "Player1", points: 25 };
-      var rank2 = { player: "Player2", points: 22 };
-      var rank3 = { player: "Player3", points: 18 };
-      var rank4 = { player: "Player4", points: 14 };
-      var rank5 = { player: "Player5", points: 10 };
-      var rank6 = { player: "Player6", points: 5 };
-      var rank7 = { player: "Player7", points: 3 };
-      return [rank1, rank2, rank3, rank4, rank5, rank6, rank7];
+      return _ember["default"].$.getJSON("http://localhost:4500/api/results");
     }
 
   });
@@ -1301,25 +1234,17 @@ define("anki-scoreboard/templates/components/player-list", ["exports"], function
           dom.setAttribute(el1, "class", "list-group-item");
           var el2 = dom.createComment("");
           dom.appendChild(el1, el2);
-          var el2 = dom.createTextNode(" (");
-          dom.appendChild(el1, el2);
-          var el2 = dom.createComment("");
-          dom.appendChild(el1, el2);
-          var el2 = dom.createTextNode(")");
-          dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
           var el1 = dom.createTextNode("\n");
           dom.appendChild(el0, el1);
           return el0;
         },
         buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var element0 = dom.childAt(fragment, [1]);
-          var morphs = new Array(2);
-          morphs[0] = dom.createMorphAt(element0, 0, 0);
-          morphs[1] = dom.createMorphAt(element0, 2, 2);
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 0, 0);
           return morphs;
         },
-        statements: [["content", "player.name", ["loc", [null, [4, 34], [4, 49]]]], ["content", "player.id", ["loc", [null, [4, 51], [4, 64]]]]],
+        statements: [["content", "player.name", ["loc", [null, [4, 34], [4, 49]]]]],
         locals: ["player"],
         templates: []
       };
@@ -1981,7 +1906,7 @@ define("anki-scoreboard/templates/players", ["exports"], function (exports) {
         var el4 = dom.createTextNode("Type in the player's name and hit enter. Multiple players can be added with semicolon ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("code");
-        var el5 = dom.createTextNode(";");
+        var el5 = dom.createTextNode(",");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode(".");
@@ -2041,11 +1966,11 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
           "loc": {
             "source": null,
             "start": {
-              "line": 16,
+              "line": 18,
               "column": 4
             },
             "end": {
-              "line": 22,
+              "line": 26,
               "column": 4
             }
           },
@@ -2064,19 +1989,31 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
           dom.appendChild(el1, el2);
           var el2 = dom.createElement("th");
           dom.setAttribute(el2, "scope", "row");
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n            ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("td");
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n            ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("td");
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n            ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("td");
           var el3 = dom.createTextNode("???");
           dom.appendChild(el2, el3);
           dom.appendChild(el1, el2);
           var el2 = dom.createTextNode("\n            ");
           dom.appendChild(el1, el2);
           var el2 = dom.createElement("td");
-          var el3 = dom.createComment("");
-          dom.appendChild(el2, el3);
-          dom.appendChild(el1, el2);
-          var el2 = dom.createTextNode("\n            ");
-          dom.appendChild(el1, el2);
-          var el2 = dom.createElement("td");
-          var el3 = dom.createComment("");
+          var el3 = dom.createTextNode("???");
           dom.appendChild(el2, el3);
           dom.appendChild(el1, el2);
           var el2 = dom.createTextNode("\n        ");
@@ -2088,12 +2025,13 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         },
         buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
           var element0 = dom.childAt(fragment, [1]);
-          var morphs = new Array(2);
-          morphs[0] = dom.createMorphAt(dom.childAt(element0, [3]), 0, 0);
-          morphs[1] = dom.createMorphAt(dom.childAt(element0, [5]), 0, 0);
+          var morphs = new Array(3);
+          morphs[0] = dom.createMorphAt(dom.childAt(element0, [1]), 0, 0);
+          morphs[1] = dom.createMorphAt(dom.childAt(element0, [3]), 0, 0);
+          morphs[2] = dom.createMorphAt(dom.childAt(element0, [5]), 0, 0);
           return morphs;
         },
-        statements: [["content", "result.player", ["loc", [null, [19, 16], [19, 33]]]], ["content", "result.points", ["loc", [null, [20, 16], [20, 33]]]]],
+        statements: [["content", "result.rank", ["loc", [null, [20, 28], [20, 43]]]], ["content", "result.player.name", ["loc", [null, [21, 16], [21, 38]]]], ["content", "result.total", ["loc", [null, [22, 16], [22, 32]]]]],
         locals: ["result"],
         templates: []
       };
@@ -2112,7 +2050,7 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
             "column": 0
           },
           "end": {
-            "line": 220,
+            "line": 224,
             "column": 8
           }
         },
@@ -2166,6 +2104,18 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("th");
         var el5 = dom.createTextNode("Points");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("th");
+        var el5 = dom.createTextNode("Won");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("th");
+        var el5 = dom.createTextNode("Lost");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode("\n    ");
@@ -3114,7 +3064,7 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         morphs[0] = dom.createMorphAt(dom.childAt(fragment, [4, 3]), 1, 1);
         return morphs;
       },
-      statements: [["block", "each", [["get", "model", ["loc", [null, [16, 12], [16, 17]]]]], [], 0, null, ["loc", [null, [16, 4], [22, 13]]]]],
+      statements: [["block", "each", [["get", "model.results", ["loc", [null, [18, 12], [18, 25]]]]], [], 0, null, ["loc", [null, [18, 4], [26, 13]]]]],
       locals: [],
       templates: [child0]
     };
@@ -3286,7 +3236,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("anki-scoreboard/app")["default"].create({"LOCALE":"en","name":"anki-scoreboard","version":"0.0.0+bac1c590"});
+  require("anki-scoreboard/app")["default"].create({"LOCALE":"en","name":"anki-scoreboard","version":"0.0.0+e50a9910"});
 }
 
 /* jshint ignore:end */

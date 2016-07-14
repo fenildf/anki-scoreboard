@@ -26,42 +26,19 @@ export default function () {
 
   this.get('/players');
   this.get('/players/:id');
-  this.passthrough("/players");
-  this.passthrough("/players/:id");
+  this.passthrough('/players');
+  this.passthrough('/players/:id');
 
   this.get('/matches');
   this.get('/matches/:id');
-  this.passthrough("/matches");
-  this.passthrough("/matches/:id");
+  this.passthrough('/matches');
+  this.passthrough('/matches/:id');
 
-  //this.passthrough("/matches");
-  //this.passthrough("/matches/:id");
-
-
-  //this.get('/players', function () {
-  //  return {
-  //    players: [
-  //      {_id: "5773e621eb00a90afc181a67", name: "Alice"},
-  //      {_id: "2", name: "Bla"},
-  //      {_id: "3", name: "Blub"}
-  //    ]
-  //  };
-  //});
-  //
-  //this.get('/players/:id');
-  //
-  //this.get('/players/5773e621eb00a90afc181a67', function () {
-  //  return {_id: "5773e621eb00a90afc181a67", name: "Alice"};
-  //});
-
-
-
-  //this.get('/matches', function () {
-  //  return {
-  //    matches: [
-  //      {_id: "1", date: "2016-07-01T10:30:00", type: "koth", players: ["5773e621eb00a90afc181a67"]}
-  //    ]
-  //  };
-  //});
+  this.get('/results', () => {
+    return {
+      results: []
+    };
+  });
+  this.passthrough('/results');
 
 }

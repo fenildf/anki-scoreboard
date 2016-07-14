@@ -282,24 +282,6 @@ define('anki-scoreboard/tests/integration/components/player-list-test.jshint', [
     assert.ok(true, 'integration/components/player-list-test.js should pass jshint.');
   });
 });
-define('anki-scoreboard/tests/locales/en-cldr.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | locales/en-cldr.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'locales/en-cldr.js should pass jshint.\nlocales/en-cldr.js: line 1, col 178, Expected \'{\' and instead saw \'return\'.\n\n1 error');
-  });
-});
-define('anki-scoreboard/tests/locales/en.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | locales/en.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'locales/en.js should pass jshint.');
-  });
-});
 define('anki-scoreboard/tests/models/match.jshint', ['exports'], function (exports) {
   'use strict';
 
@@ -387,7 +369,7 @@ define('anki-scoreboard/tests/routes/results.jshint', ['exports'], function (exp
   QUnit.module('JSHint | routes/results.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/results.js should pass jshint.\nroutes/results.js: line 2, col 8, \'_\' is defined but never used.\n\n1 error');
+    assert.ok(true, 'routes/results.js should pass jshint.');
   });
 });
 define('anki-scoreboard/tests/routes/weapons.jshint', ['exports'], function (exports) {
