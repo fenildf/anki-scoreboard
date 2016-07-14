@@ -2271,12 +2271,14 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#00FF00");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#FF0000");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
@@ -2320,12 +2322,14 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#00FF00");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#FF0000");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
@@ -2369,12 +2373,14 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#00FF00");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#FF0000");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
@@ -2497,12 +2503,14 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#00FF00");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#FF0000");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
@@ -2546,12 +2554,14 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#00FF00");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#FF0000");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
@@ -2595,12 +2605,14 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#00FF00");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#FF0000");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
@@ -2723,12 +2735,14 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#00FF00");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#FF0000");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
@@ -2772,12 +2786,14 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#00FF00");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#FF0000");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
@@ -2821,12 +2837,14 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#00FF00");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#FF0000");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
@@ -2949,12 +2967,14 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#00FF00");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#FF0000");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
@@ -2998,12 +3018,14 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#00FF00");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#FF0000");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
@@ -3047,12 +3069,14 @@ define("anki-scoreboard/templates/results", ["exports"], function (exports) {
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#00FF00");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
         var el4 = dom.createTextNode("\n        ");
         dom.appendChild(el3, el4);
         var el4 = dom.createElement("td");
+        dom.setAttribute(el4, "bgcolor", "#FF0000");
         var el5 = dom.createTextNode("0");
         dom.appendChild(el4, el5);
         dom.appendChild(el3, el4);
@@ -3262,7 +3286,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("anki-scoreboard/app")["default"].create({"LOCALE":"en","name":"anki-scoreboard","version":"0.0.0+10f489d5"});
+  require("anki-scoreboard/app")["default"].create({"LOCALE":"en","name":"anki-scoreboard","version":"0.0.0+bac1c590"});
 }
 
 /* jshint ignore:end */
