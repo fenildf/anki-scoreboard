@@ -188,7 +188,6 @@ app.get('/api/results', function(req,res) {
               res.send({error:err});
             }
             else {
-              console.log(err);
               res.send({results:sortedResults});
             }
           }
