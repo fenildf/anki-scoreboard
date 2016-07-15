@@ -1,0 +1,24 @@
+<h2 class="page-header">{{title}}
+    <small>Results</small>
+</h2>
+<table class="table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Player</th>
+        <th>Points</th>
+        <th>Won/Lost/Played</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {{#each results as |result|}}
+        <tr>
+            <th scope="row">{{result.rank}}</th>
+            <td>{{result.player.name}}</td>
+            <td>{{result.total}}</td>
+            <td>{{result.player.won}}/{{result.player.lost}}/{{result.player.played}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

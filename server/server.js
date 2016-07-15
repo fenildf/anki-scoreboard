@@ -25,7 +25,10 @@ console.log("Connectiong to database. " + databaseUrl);
 mongoose.connect(databaseUrl);
 
 var playerSchema = new mongoose.Schema({
-  name: 'string'
+  name: 'string',
+  won: 'number',
+  lost: 'number',
+  played: 'number'
 });
 
 var matchesSchema = new mongoose.Schema({
@@ -76,6 +79,29 @@ app.post('/api/matches', function(req,res) {
   if (matchType) {
     new Match({type: matchType, date: matchDate, players: matchPlayers}).save();
   }
+
+  // Update players wins/looses/played
+  _.each(matchPlayers, function(playerId, index) {
+    console.log("Update player: #" + index + " " + playerId);
+
+    //weirdCar.update({$inc: {wheels:1}}, { w: 1 }, callback);
+
+    //Player.update({_id: playerId}, {name: "Alice2", wins: 5, played: 10});
+
+    var updates = {
+      $inc: {
+        won:index == 0 ? 1:0,
+        lost:index == matchPlayers.length-1 && matchPlayers.length > 1 ? 1:0,
+        played:1
+      }
+    };
+
+    Player.update({_id: playerId}, updates, null, function (err, raw) {
+      if (err) return handleError(err);
+      console.log('The raw response from Mongo was ', raw);
+    });
+
+  });
 });
 
 
@@ -121,13 +147,22 @@ app.get('/api/results', function(req,res) {
   Match.find({}).populate('players').exec(
           function(err,matches) {
 
-            var results = [];
+            // Holds results for each match type
+            var results = {};
+
+            var totalResults = [];
 
             // Loop: matches
             for (var i=0; i < matches.length; i++) {
               var match = matches[i];
+              var matchType = match.type;
               var players = match.players;
 
+              var matchResults = results[matchType];
+              if (!matchResults) {
+                matchResults = [];
+                results[matchType] = matchResults;
+              }
 
               // Loop: players
               for (var j=0; j < players.length; j++) {
@@ -153,8 +188,23 @@ app.get('/api/results', function(req,res) {
                     points = 0;
                 }
 
+                // Calculate match points
+                var matchPoints = points;
+                var p = _.find(matchResults, function(result){
+                  return result.player == player;
+                });
+
+                if (p) {
+                  matchPoints = p.total + points;
+                  p.total = matchPoints;
+                } else {
+                  matchResults.push({player: player, total: points, won: 0, lost: 0});
+                }
+
+                // Calculate total points
+
                 // Check if player already contained in results
-                var p = _.find(results, function(result){
+                p = _.find(totalResults, function(result){
                   return result.player == player;
                 });
 
@@ -163,7 +213,7 @@ app.get('/api/results', function(req,res) {
                   totalPoints = p.total + points;
                   p.total = totalPoints;
                 } else {
-                  results.push({player: player, total: totalPoints});
+                  totalResults.push({player: player, total: totalPoints});
                 }
                 //console.log("#" + (j + 1) + " " + player.name + " --> " + totalPoints);
 
@@ -171,24 +221,46 @@ app.get('/api/results', function(req,res) {
 
             } // end loop: matches
 
-            // Sort results ASC
-            var sortedResults = _.sortBy(results, function(result){
-              return result.total;
-            });
 
-            // Reverse sorted results to DSC
-            sortedResults.reverse();
+            results['total'] = totalResults;
 
-            // Add rank
-            _.each(sortedResults, function(result, index) {
-              _.extend(result, {rank: index+1});
+            var keys = _.keys(results);
+
+            _.each(keys, function(key) {
+              var resultsArray = results[key];
+
+              // Sort results ASC
+              var sortedResults = _.sortBy(resultsArray, function(result){
+                return result.total;
+              });
+
+              // Reverse sorted results to DSC
+              sortedResults.reverse();
+
+              // Add rank
+              var lastPoints;
+              var lastRank;
+              _.each(sortedResults, function(result, index) {
+                var rank = index+1;
+
+                if (result.total === lastPoints) {
+                  _.extend(result, {rank: lastRank});
+                } else {
+                  _.extend(result, {rank: rank});
+                  lastRank = rank;
+                }
+
+                lastPoints = result.total;
+              });
+
+              results[key] = sortedResults;
             });
 
             if(err) {
               res.send({error:err});
             }
             else {
-              res.send({results:sortedResults});
+              res.send({results:results});
             }
           }
   );
